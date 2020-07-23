@@ -1,0 +1,19 @@
+{
+    "name": "n0nag0n/fatfree-devtools",
+    "description": "A set of tools for help in creating models, controllers, routes, etc.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "n0nag0n",
+            "email": "n0nag0n@sky-9.com"
+        }
+    ],
+    "require": {
+        "bcosca/fatfree-core": "^3.7"
+	},
+	"autoload": {
+		"classmap" : [ "web/libs", "web/controllers", "web/models" ]
+	},
+	"bin": "bin/fatfree-devtools"
+}

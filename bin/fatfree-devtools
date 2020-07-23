@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+require(__DIR__.'/../vendor/autoload.php');
+
+define("DEVTOOLS_VERSION", '0.1.0');
+
+$fw = Base::instance();
+$fw->DEBUG = 3;
+$fw->HALT = false;
+
+$fw->route('GET / [cli]', 'n0nag0n\Cli_Controller->help');
+$fw->route('GET /help [cli]', 'n0nag0n\Cli_Controller->help');
+$fw->route('GET /serve [cli]', 'n0nag0n\Cli_Controller->serve');
+
+$fw->run();
