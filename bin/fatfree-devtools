@@ -9,6 +9,8 @@ $fw = Base::instance();
 $fw->DEBUG = 3;
 $fw->HALT = false;
 
+putenv("FATFREE_DEVTOOLS_PROJECT_BASE_DIR=".getcwd().'/');
+
 $fw->route('GET / [cli]', 'n0nag0n\Cli_Controller->help');
 $fw->route('GET /help [cli]', 'n0nag0n\Cli_Controller->help');
 $fw->route('GET /serve [cli]', 'n0nag0n\Cli_Controller->serve');

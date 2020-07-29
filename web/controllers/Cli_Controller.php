@@ -10,7 +10,7 @@ class Cli_Controller {
 		ob_end_clean();
 	}
 	public function serve(\Base $fw, array $args = []): void {
-		$dir = realpath(__DIR__.'/../../public/');
+		$dir = realpath(__DIR__.'/../public/');
 		CLI::info("PHP Webserver Started for Fat-Free Dev Tools. Press Ctrl+C to stop it!");
 		system('php -S localhost:8000 -t '.$dir);
 	}
