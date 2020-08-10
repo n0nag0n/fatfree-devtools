@@ -10,10 +10,11 @@
         }
     ],
     "require": {
-        "bcosca/fatfree-core": "^3.7"
+        "bcosca/fatfree-core": "^3.7",
+        "ikkez/f3-flash": "^1.0"
 	},
 	"autoload": {
-		"classmap" : [ "web/libs", "web/controllers", "web/models" ]
+		"classmap" : [ "libs", "controllers", "models" ]
 	},
 	"bin": "bin/fatfree-devtools"
 }

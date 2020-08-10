@@ -11,8 +11,11 @@ $fw->HALT = false;
 
 putenv("FATFREE_DEVTOOLS_PROJECT_BASE_DIR=".getcwd().'/');
 
-$fw->route('GET / [cli]', 'n0nag0n\Cli_Controller->help');
-$fw->route('GET /help [cli]', 'n0nag0n\Cli_Controller->help');
-$fw->route('GET /serve [cli]', 'n0nag0n\Cli_Controller->serve');
+$fw->PROJECT_BASE_DIR = getcwd().'/';
+
+$fw->route('GET / [cli]', 'n0nag0n\Devtools_Controller->help');
+$fw->route('GET /help [cli]', 'n0nag0n\Devtools_Controller->help');
+$fw->route('GET /serve [cli]', 'n0nag0n\Devtools_Controller->serve');
+$fw->route('GET /admin-serve [cli]', 'n0nag0n\Devtools_Controller->adminServe');
 
 $fw->run();

@@ -49,7 +49,7 @@
     define("CLI_BG_YELLOW"  , CLI_COLOR_START."43m");
 
     class CLI {
-        public static $outputPrefix = '    ';
+        public static $outputPrefix = '';
         // Variables to hold the output and status
         // of the last ran command.
         public static $lastCmdStatus = false;

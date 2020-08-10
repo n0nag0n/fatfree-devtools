@@ -1,9 +1,9 @@
 <h1>Environment Setup Page</h1>
-<p>The base directory for this project is <code>{{ @PROJECT_BASE_DIR }}</code>.</p>
+<p>The base directory for this project is <code><?= ($PROJECT_BASE_DIR) ?></code>.</p>
 <form method="POST" action="/init-environment/create">
 	<h2>General Settings</h2>
 	<div class="form-group">
-		<label for="db_host">Title of Project</label>
+		<label for="title">Title of Project</label>
 		<input type="text" name="title" class="form-control" id="title" required>
 		<small class="form-text text-muted">This is the title of the project you are working on. (Ex: Cool Todo App)</small>
 	</div>
@@ -12,7 +12,7 @@
 		<label for="controller">Config Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="config" name="config" value="app/config/" required>
 		</div>
@@ -22,9 +22,19 @@
 		<label for="controller">Controller Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="controller" name="controller" value="app/controllers/" required>
+		</div>
+		<small class="form-text text-muted">Controllers are the "directors" of your web app. They handle requests from your users and process them.</small>
+	</div>
+	<div class="form-group">
+		<label for="task">Task Directory</label>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
+			</div>
+			<input type="text" class="form-control" id="task" name="task" value="app/tasks/" required>
 		</div>
 		<small class="form-text text-muted">Controllers are the "directors" of your web app. They handle requests from your users and process them.</small>
 	</div>
@@ -32,7 +42,7 @@
 		<label for="controller">Model Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="model" name="model" value="app/models/" required>
 		</div>
@@ -42,7 +52,7 @@
 		<label for="controller">UI Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="ui" name="ui" value="app/ui/" required>
 		</div>
@@ -52,7 +62,7 @@
 		<label for="controller">Public Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="public" name="public" value="public/" required>
 		</div>
@@ -62,7 +72,7 @@
 		<label for="controller">Bin Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="bin" name="bin" value="app/bin/" required>
 		</div>
@@ -72,7 +82,7 @@
 		<label for="controller">Utils Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="utils" name="utils" value="app/utils/" required>
 		</div>
@@ -82,7 +92,7 @@
 		<label for="controller">Log Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="log" name="log" value="app/logs/" required>
 		</div>
@@ -92,7 +102,7 @@
 		<label for="controller">Temp Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="temp" name="temp" value="app/tmp/" required>
 		</div>
@@ -102,7 +112,7 @@
 		<label for="controller">Composer Vendor Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
-				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+				<span class="input-group-text"><?= ($PROJECT_BASE_DIR) ?></span>
 			</div>
 			<input type="text" class="form-control" id="composer" name="composer" value="vendor/" required>
 		</div>
@@ -111,22 +121,22 @@
 	<h2>Config Files</h2>
 	<p>These are config files in the <code>config/</code> directory.</p>
 	<div class="form-group">
-		<label for="db_host">General Config</label>
+		<label for="general_config">General Config</label>
 		<input type="text" name="general_config" class="form-control" id="general_config" value="config.ini" required>
 		<small class="form-text text-muted">You'll put things in here that are used in pretty much all requests of your project: database connection information, the name of your project, etc.</small>
 	</div>
 	<div class="form-group">
-		<label for="db_host">Routes</label>
+		<label for="routes">Routes</label>
 		<input type="text" name="routes" class="form-control" id="routes" value="routes.ini" required>
 		<small class="form-text text-muted">You'll define your routes (what happens when you type in a URL such as <code>/about-us</code> and what to do with it.</small>
 	</div>
 	<div class="form-group">
-		<label for="db_host">CLI Routes</label>
-		<input type="text" name="routes" class="form-control" id="routes" value="routes.ini" required>
+		<label for="cli_routes">CLI Routes</label>
+		<input type="text" name="cli_routes" class="form-control" id="cli_routes" value="cli_routes.ini" required>
 		<small class="form-text text-muted">This file will hold routes for scripts you want to use for crons, one off scripts, etc. Ex: <code>app/bin/cli generate list --force</code>.</small>
 	</div>
 	<div class="form-group">
-		<label for="db_host">Services</label>
+		<label for="services">Services</label>
 		<input type="text" name="services" class="form-control" id="services" value="services.php" required>
 	</div>
 	<h2>MySQL Database Connection Information</h2>
@@ -137,20 +147,28 @@ mysql> CREATE DATABASE `some_cool_database` CHARACTER SET utf8mb4 COLLATE utf8mb
 mysql> GRANT ALL PRIVILEGES ON `some_cool_database`.* TO 'some_user'@'localhost' IDENTIFIED BY 'somecoolpassword';
 	</code></pre>
 	<div class="form-group">
-		<label for="db_host">Database Host</label>
-		<input type="text" name="db_host" class="form-control" id="db_host" value="localhost">
+		<label for="mysql_host">Database Host</label>
+		<input type="text" name="mysql_host" class="form-control" id="mysql_host" value="localhost">
 	</div>
 	<div class="form-group">
-		<label for="db_host">Database Name</label>
-		<input type="text" name="db_name" class="form-control" id="db_name" value="some_cool_database">
+		<label for="mysql_host">Database Name</label>
+		<input type="text" name="mysql_name" class="form-control" id="mysql_name" value="some_cool_database">
 	</div>
 	<div class="form-group">
-		<label for="db_username">Database Username</label>
-		<input type="text" name="db_username" class="form-control" id="db_username" value="some_user">
+		<label for="mysql_username">Database Username</label>
+		<input type="text" name="mysql_username" class="form-control" id="mysql_username" value="some_user">
 	</div>
 	<div class="form-group">
-		<label for="db_password">Database Password</label>
-		<input type="password" name="db_password" class="form-control" id="db_password" value="somecoolpassword">
+		<label for="mysql_password">Database Password</label>
+		<input type="password" name="mysql_password" class="form-control" id="mysql_password" value="somecoolpassword">
+	</div>
+	<div class="form-group">
+		<label for="mysql_port">Database Port</label>
+		<input type="number" name="mysql_port" class="form-control" id="mysql_port" value="3306">
+	</div>
+	<div class="form-group">
+		<label for="mysql_charset">Database Character Set</label>
+		<input type="text" name="mysql_charset" class="form-control" id="mysql_charset" value="utf8mb4">
 	</div>
 	<button type="submit" class="btn btn-primary mb-5">Submit</button>
 </form>
