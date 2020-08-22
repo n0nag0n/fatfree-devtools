@@ -1,7 +1,6 @@
 <h1>Initialize Environment Setup</h1>
 <p>Welcome to the Fat-Free Devtools Setup! Fat-Free is a loosely opinionated framework for PHP. You can configure the your project in an unlimited amount of possibilities because of how simple the framework is itself. Take the below code for example:</p>
-<pre><code>
-&lt;?php
+<pre><code class="lang-php">&lt;?php
 	$fw = Base::instance();
 	$fw->addRoute('GET /', function() { echo json_encode([ 'hello' => 'world!' ]); });
 	$fw->run();

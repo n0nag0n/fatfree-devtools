@@ -1,25 +1,74 @@
-<h1>Config Files</h1>
+<h1>Configuration</h1>
 <p>These are config files in the <code>config/</code> directory.</p>
 <form method="POST" action="/init-environment/update">
 	<input type="hidden" name="next_page" value="choose-database">
+	<h2>Config Files</h2>
 	<div class="form-group">
 		<label for="general_config">General Config</label>
-		<input type="text" name="general_config" class="form-control" id="general_config" value="config.ini" required>
+		<input type="text" name="general_config" class="form-control" id="general_config" value="{{ @config.general_config ?: 'config.ini' }}" required>
 		<small class="form-text text-muted">You'll put things in here that are used in pretty much all requests of your project: database connection information, the name of your project, etc.</small>
 	</div>
 	<div class="form-group">
 		<label for="routes">Routes</label>
-		<input type="text" name="routes" class="form-control" id="routes" value="routes.ini" required>
+		<input type="text" name="routes" class="form-control" id="routes" value="{{ @config.routes ?: 'routes.ini' }}" required>
 		<small class="form-text text-muted">You'll define your routes (what happens when you type in a URL such as <code>/about-us</code> and what to do with it.</small>
 	</div>
 	<div class="form-group">
 		<label for="cli_routes">CLI Routes</label>
-		<input type="text" name="cli_routes" class="form-control" id="cli_routes" value="cli_routes.ini" required>
+		<input type="text" name="cli_routes" class="form-control" id="cli_routes" value="{{ @config.cli_routes ?: 'cli_routes.ini' }}" required>
 		<small class="form-text text-muted">This file will hold routes for scripts you want to use for crons, one off scripts, etc. Ex: <code>app/bin/cli generate list --force</code>.</small>
 	</div>
 	<div class="form-group">
 		<label for="services">Services</label>
-		<input type="text" name="services" class="form-control" id="services" value="services.php" required>
+		<input type="text" name="services" class="form-control" id="services" value="{{ @config.services ?: 'services.php' }}" required>
+	</div>
+	<h2>Variable Configuration</h2>
+	<div class="form-group">
+		<label for="autoload">AUTOLOAD</label>
+		<input type="text" name="autoload" class="form-control" id="autoload" value="{{ @config.autoload }}">
+		<small class="form-text text-muted">The model, controller, task, and util directories will already be configured in the autoloader. Add any other files in here (relative to the public directory, or absolute path) separated by a semi-colon.</small>
+	</div>
+	<div class="form-group">
+		<label for="cache">CACHE</label>
+		<input type="text" name="cache" class="form-control" id="cache" value="{{ @config.cache ?: 'false' }}">
+		<small class="form-text text-muted">There are multiple values you can set here. Set to <code>true</code> to turn on file level caching (saved to the <code>tmp/</code> directory). To specify a directory path use <code>folder=/path/to/cache/</code>. For memcached, use <code>memcached=[host][:port=11211]</code> (Ex: <code>memcached=localhost:11233</code>). For Redis use <code>redis=[host][:port=6379][:username=null][:password=null]</code></small>
+	</div>
+	<div class="form-group">
+		<label for="debug">DEBUG</label>
+		<select name="debug" class="form-control" id="debug">
+			<option value="0">0 - Suppresses logs of the stack trace (Production recommend).</option>
+			<option value="1" {{ @config.debug === '1' ? 'selected' : '' }}>1 - Logs files and lines.</option>
+			<option value="2" {{ @config.debug === '2' ? 'selected' : '' }}>2 - Logs classes and functions as well.</option>
+			<option value="3" {{ @config.debug === '3' ? 'selected' : '' }}>3 - Logs detailed info of the objects as well. (Development recommended)</option>
+		</select> 
+	</div>
+	<div class="form-group">
+		<label for="encoding">ENCODING</label>
+		<input type="text" name="encoding" class="form-control" id="encoding" value="{{ @config.encoding ?: 'UTF-8' }}">
+		<small class="form-text text-muted">Character Set to Use Within the App.</small>
+	</div>
+	<div class="form-group">
+		<label for="escape">ESCAPE</label>
+		<select name="escape" class="form-control" id="escape">
+			<option value="1">Yes - Autoescape Template Variables (highly recommended)</option>
+			<option value="0" {{ @config.escape === '0' ? 'selected' : '' }}>No - Don't Escape Template Variables</option>
+		</select> 
+		<small class="form-text text-muted">This is used to help prevent XSS attacks on your site. It is highly recommended to have this enabled.</small>
+	</div>
+	<div class="form-group">
+		<label for="halt">HALT</label>
+		<select name="halt" class="form-control" id="halt">
+			<option value="1">Yes - Stop Execution After a Non-Fatal Error.</option>
+			<option value="0" {{ @config.halt === '0' ? 'selected' : '' }}>No - Continue Executing</option>
+		</select> 
+		<small class="form-text text-muted">It is helpful to halt execution after an error so the page doesn't fill up with a lot of error messages.</small>
+	</div>
+	<div class="form-group">
+		<label for="highlight">HIGHLIGHT</label>
+		<select name="highlight" class="form-control" id="highlight">
+			<option value="1">Yes - Use Syntax Highlighting in Stack Traces.</option>
+			<option value="0" {{ @config.highlight === '0' ? 'selected' : '' }}>No - Do Not Use Syntax Highlighting</option>
+		</select>
 	</div>
 	<a href="/init-environment/directory-setup" type="submit" class="btn btn-primary mb-5">Back</a>
 	<button type="submit" class="btn btn-primary mb-5">Next</button>

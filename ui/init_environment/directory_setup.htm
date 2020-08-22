@@ -1,7 +1,7 @@
 <h1>Directory Setup</h1>
 <p>This is where all your paths to project directories will be setup in your project. Again because Fat-Free is so flexible, you can make it whatever you'd like.</p>
 <form method="POST" action="/init-environment/update">
-	<input type="hidden" name="next_page" value="choose-database">
+	<input type="hidden" name="next_page" value="basic-config">
 	<div class="form-group">
 		<label for="controller">Config Directory</label>
 		<div class="input-group">
@@ -18,7 +18,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="controller" name="controller" value="{{ @config.controller ?: 'app/controller/' }}" required>
+			<input type="text" class="form-control" id="controller" name="controller" value="{{ @config.controller ?: 'app/controller/' }}">
 		</div>
 		<small class="form-text text-muted">Controllers are the "directors" of your web app. They handle requests from your users and process them.</small>
 	</div>
@@ -28,67 +28,87 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="task" name="task" value="{{ @config.task ?: 'app/task/' }}" required>
+			<input type="text" class="form-control" id="task" name="task" value="{{ @config.task ?: 'app/task/' }}">
 		</div>
 		<small class="form-text text-muted">Controllers are the "directors" of your web app. They handle requests from your users and process them.</small>
 	</div>
 	<div class="form-group">
-		<label for="controller">Model Directory</label>
+		<label for="model">Model Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="model" name="model" value="{{ @config.model ?: 'app/model/' }}" required>
+			<input type="text" class="form-control" id="model" name="model" value="{{ @config.model ?: 'app/model/' }}">
 		</div>
 		<small class="form-text text-muted">A model basically represents a table in your database. It makes it very easy to add, modify, or delete new rows from your tables.</small>
 	</div>
 	<div class="form-group">
-		<label for="controller">UI Directory</label>
+		<label for="ui">UI Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="ui" name="ui" value="{{ @config.ui ?: 'app/ui/' }}" required>
+			<input type="text" class="form-control" id="ui" name="ui" value="{{ @config.ui ?: 'app/ui/' }}">
 		</div>
 		<small class="form-text text-muted">These are where all your HTML and template files will be stored.</small>
 	</div>
 	<div class="form-group">
-		<label for="controller">Public Directory</label>
+		<label for="tests">Test Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="public" name="public" value="{{ @config.public ?: 'app/public/' }}" required>
+			<input type="text" class="form-control" id="tests" name="tests" value="{{ @config.tests ?: 'app/tests/' }}">
+		</div>
+		<small class="form-text text-muted">Unit tests are vital to make sure that the parts of your system you want to work a certain way, work correctly that way.</small>
+	</div>
+	<div class="form-group">
+		<label for="public">Public Directory</label>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+			</div>
+			<input type="text" class="form-control" id="public" name="public" value="{{ @config.public ?: 'public/' }}" required>
 		</div>
 		<small class="form-text text-muted">This is the directory from where Apache/Nginx/Lighttpd etc will serve your content. It should only have 1 PHP file (index.php) and have your images, JavaScript, and CSS files as well.</small>
 	</div>
 	<div class="form-group">
-		<label for="controller">Bin Directory</label>
+		<label for="bin">Bin Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="bin" name="bin" value="{{ @config.bin ?: 'app/bin/' }}" required>
+			<input type="text" class="form-control" id="bin" name="bin" value="{{ @config.bin ?: 'app/bin/' }}">
 		</div>
 		<small class="form-text text-muted">Several executable files will be placed here to help with fleshing out your project better (test for unit tests, and cli for CLI scripts/crons).</small>
 	</div>
 	<div class="form-group">
-		<label for="controller">Utils Directory</label>
+		<label for="utils">Utils Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="utils" name="utils" value="{{ @config.utils ?: 'app/utils/' }}" required>
+			<input type="text" class="form-control" id="utils" name="utils" value="{{ @config.utils ?: 'app/utils/' }}">
 		</div>
 		<small class="form-text text-muted">This folder will hold any random classes you may have that help you with your project that you need to custom design (such as a custom email class to send emails, or a special way to format text, etc).</small>
 	</div>
 	<div class="form-group">
-		<label for="controller">Log Directory</label>
+		<label for="log">Log Directory</label>
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="log" name="log" value="{{ @config.log ?: 'app/log/' }}" required>
+			<input type="text" class="form-control" id="log" name="log" value="{{ @config.log ?: 'app/log/' }}">
+		</div>
+		<small class="form-text text-muted">All your log files will be saved here.</small>
+	</div>
+	<div class="form-group">
+		<label for="uploads">Upload Directory</label>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+			</div>
+			<input type="text" class="form-control" id="uploads" name="uploads" value="{{ @config.uploads ?: 'app/uploads/' }}">
 		</div>
 		<small class="form-text text-muted">All your log files will be saved here.</small>
 	</div>
@@ -98,7 +118,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="temp" name="temp" value="{{ @config.temp ?: 'app/temp/' }}" required>
+			<input type="text" class="form-control" id="temp" name="temp" value="{{ @config.temp ?: 'app/temp/' }}">
 		</div>
 		<small class="form-text text-muted">These are usually cached files from Fat-Free.</small>
 	</div>

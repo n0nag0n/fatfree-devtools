@@ -75,7 +75,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$project_config->copyfrom($post);
 		$project_config->save();
 
-		$fw->flash->addMessage('Settings Updated Successfully', 'success');
+		//$fw->flash->addMessage('Settings Updated Successfully', 'success');
 
 		if($post['next_page']) {
 			$fw->reroute('/init-environment/'.$post['next_page'], false);
@@ -87,6 +87,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$project_config = new Project_Config($fw->DB);
 		$project_config->load();
 		$config = $project_config->cast();
+		$fw->mset($config, 'cnf_');
 
 		// start creating directories
 		$this->createProjectDir($config['config']);
@@ -99,6 +100,12 @@ class Init_Environment_Controller extends Base_Controller {
 		$this->createProjectDir($config['log']);
 		$this->createProjectDir($config['temp']);
 		$this->createProjectDir($config['task']);
+		$this->createProjectDir($config['uploads']);
+		$this->createProjectDir($config['tests']);
+
+		if(!empty($config['sqlite'])) {
+			$this->createProjectDir(dirname($config['sqlite']));
+		}
 
 		// create some template files
 		$this->createProjectFile($config['public'].'index.php', 'index.php');
@@ -107,9 +114,13 @@ class Init_Environment_Controller extends Base_Controller {
 		$this->createProjectFile($config['config'].$config['routes'], 'routes.ini');
 		$this->createProjectFile($config['config'].$config['cli_routes'], 'cli_routes.ini');
 		$this->createProjectFile($config['config'].$config['services'], 'services.php');
+		$this->createProjectFile($config['config'].'bootstrap.php', 'bootstrap.php');
 
 		// some default files
 		$this->createProjectFile($config['controller'].'Base_Controller.php', 'Base_Controller.php');
+		$this->createProjectFile($config['bin'].'unit-test', 'unit-test.php');
+		$this->makeProjectFileExecutable($config['bin'].'unit-test');
+		$this->createProjectFile($config['tests'].'unit-test-example.php', 'unit-test-example.php');
 		$this->createControllerFile($config['controller'].'Index_Controller.php');
 		$this->createControllerFile($config['task'].'Task_Controller.php');
 
@@ -117,24 +128,44 @@ class Init_Environment_Controller extends Base_Controller {
 		$fw->reroute('/', false);
 	}
 
-	public function createProjectDir(string $relative_path): bool {
-		if(!file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
+	protected function createProjectDir(string $relative_path): bool {
+		if(!empty($relative_path) && !file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
 			return mkdir($this->fw->PROJECT_BASE_DIR.$relative_path, 0775, true);
 		}
 		return true;
 	}
 
-	public function createProjectFile(string $relative_path, string $template_file_path): bool {
-		if(!file_exists($this->fw->PROJECT_DATA_DIR.$relative_path)) {
-			$contents = $this->fw->read(__DIR__.'/../../templates/'.$template_file_path);
-			$contents = str_replace('<?php', '#?php', $contents);
+	protected function createProjectFile(string $relative_path, string $template_file_path): bool {
+		$file_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
+		if(!empty($relative_path) && !file_exists($file_path)) {
+			$contents = $this->fw->read(__DIR__.'/../templates/'.$template_file_path);
+			$contents = str_replace('<?php', '<test-php', $contents);
+			
+			$parsed_contents = \Template::instance()->parse($contents);
+			$contents = \Template::instance()->build($parsed_contents);
 			$contents = \Template::instance()->resolve($contents);
-			$this->fw->write($this->fw->PROJECT_BASE_DIR.$relative_path, str_replace('#?php', '<?php', $contents));
+			$this->fw->write($file_path, $contents);
+			$contents = $this->sandbox($file_path);
+			$this->fw->write($file_path, str_replace('<test-php', '<?php', $contents));
 		}
 		return true;
 	}
 
-	public function createControllerFile(string $relative_path): bool {
+	protected function makeProjectFileExecutable(string $relative_path): bool {
+		$file_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
+		return chmod($file_path, 0775);
+	}
+
+	protected function sandbox(string $file_path): string {
+		$this->temp=$this->fw->hive();
+		unset($hive);
+		extract($this->temp);
+		ob_start();
+		require($file_path);
+		return ob_get_clean();
+	}
+
+	protected function createControllerFile(string $relative_path): bool {
 		if(!file_exists($this->fw->PROJECT_DATA_DIR.$relative_path)) {
 			$controller_filename = basename($this->fw->PROJECT_DATA_DIR.$relative_path);
 			$controller_name = explode('.', $controller_filename)[0];

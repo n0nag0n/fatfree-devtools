@@ -1,0 +1,16 @@
+<h1>SQLite DB Setup</h1>
+<p>SQLite is a self contained database. This database will be created the first time you run your application. You'll need another tool such as <a href="https://adminer.org" title="Adminer">Adminer</a> or <a href="https://www.phpliteadmin.org/" title="phpLiteAdmin">phpLiteAdmin</a> if you want a web based database file editor.</p>
+<form method="POST" action="/init-environment/update">
+	<input type="hidden" name="next_page" value="security">
+	<div class="form-group">
+		<label for="sqlite">SQLite Database Filename</label>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
+			</div>
+			<input type="text" class="form-control" id="sqlite" name="sqlite" value="{{ @config.sqlite ?: 'app/data/db.sqlite' }}" required>
+		</div>
+	</div>
+	<a href="/init-environment/choose-database" type="submit" class="btn btn-primary mb-5">Back</a>
+	<button type="submit" class="btn btn-primary mb-5">Next</button>
+</form>
