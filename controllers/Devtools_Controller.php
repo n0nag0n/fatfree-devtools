@@ -46,4 +46,17 @@ class Devtools_Controller {
 	public function version(\Base $fw) {
 		CLI::out('Fat-Free Dev Tools v-'.DEVTOOLS_VERSION);
 	}
+
+	public function cacheClear(\Base $fw) {
+		$fw->config(__DIR__.'/../config/webtools_config.ini', true);
+		$fw->set('DB', new \DB\Jig($fw->PROJECT_DATA_DIR, \DB\Jig::FORMAT_JSON ));
+
+		$Project_Config = new Project_Config($fw->DB);
+		$Project_Config->load();
+		$temp_dir = $fw->PROJECT_BASE_DIR.$Project_Config->temp;
+		CLI::deleteDirectoryAndFiles($temp_dir);
+		mkdir($temp_dir);
+		CLI::out('Temp Cache Cleared Successfully');
+	}
+
 }

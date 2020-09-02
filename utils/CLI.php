@@ -304,6 +304,15 @@
         private static function log($data) {
             if (file_exists(self::$logFile) && is_writable(self::$logFile))
                 file_put_contents(self::$logFile, $data, FILE_APPEND);
-        }
+		}
+		
+
+		public static function deleteDirectoryAndFiles(string $dir) {
+			$files = array_diff(scandir($dir), array('.','..'));
+			foreach ($files as $file) {
+			(is_dir("$dir/$file")) ? self::deleteDirectoryAndFiles("$dir/$file") : unlink("$dir/$file");
+			}
+			return rmdir($dir);
+		}
     }
 ?>
