@@ -6,7 +6,9 @@ Installation is through composer
 
 ### Globally (recommended)
 ```
-composer require --global n0nag0n/fatfree-devtools
+composer global require n0nag0n/fatfree-devtools
+# or sudo if you run into permissions issues
+sudo composer global require n0nag0n/fatfree-devtools
 ```
 
 ### Locally
