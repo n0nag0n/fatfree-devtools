@@ -38,7 +38,7 @@ fatfree-devtools serve
 #### Clear Cache
 This will clear your temp cache for you.
 ```
-fatfree-devtools serve
+fatfree-devtools cache clear
 ```
 
 #### Help
