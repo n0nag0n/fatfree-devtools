@@ -88,6 +88,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$project_config->load();
 		$config = $project_config->cast();
 		$fw->mset($config, 'cnf_');
+		$fw->set('project_config', $project_config);
 
 		// start creating directories
 		$this->createProjectDir($config['config']);
@@ -121,8 +122,9 @@ class Init_Environment_Controller extends Base_Controller {
 		$this->createProjectFile($config['bin'].'unit-test', 'unit-test.php');
 		$this->makeProjectFileExecutable($config['bin'].'unit-test');
 		$this->createProjectFile($config['tests'].'unit-test-example.php', 'unit-test-example.php');
-		$this->createControllerFile($config['controller'].'Index_Controller.php');
-		$this->createControllerFile($config['task'].'Task_Controller.php');
+		$Controller_Controller = new Controller_Controller($this->fw);
+		$Controller_Controller->createControllerFile('Index_Controller');
+		$this->createControllerFileOld($config['task'].'Task_Controller.php');
 
 		$fw->flash->addMessage('Project Built Successfully! You can now use <code>fatfree-devtools serve</code> to serve your new project!', 'success');
 		$fw->reroute('/', false);
@@ -165,9 +167,9 @@ class Init_Environment_Controller extends Base_Controller {
 		return ob_get_clean();
 	}
 
-	protected function createControllerFile(string $relative_path): bool {
-		if(!file_exists($this->fw->PROJECT_DATA_DIR.$relative_path)) {
-			$controller_filename = basename($this->fw->PROJECT_DATA_DIR.$relative_path);
+	protected function createControllerFileOld(string $relative_path): bool {
+		if(!file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
+			$controller_filename = basename($this->fw->PROJECT_BASE_DIR.$relative_path);
 			$controller_name = explode('.', $controller_filename)[0];
 			$contents = $this->fw->read(__DIR__.'/../../templates/Controller.php');
 			$contents = str_replace([ '<?php', '#controller_name#' ], [ '#?php', $controller_name ], $contents);

@@ -8,6 +8,7 @@ define("DEVTOOLS_VERSION", '0.1.0');
 $fw = Base::instance();
 $fw->DEBUG = 3;
 $fw->HALT = false;
+$fw->LOGGABLE = '403;500;503;';
 
 putenv("FATFREE_DEVTOOLS_PROJECT_BASE_DIR=".getcwd().'/');
 

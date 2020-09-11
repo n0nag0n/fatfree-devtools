@@ -9,6 +9,13 @@ abstract class Base_Controller {
 
 	public function __construct(\Base $fw) {
 		$this->fw = $fw;
+		$has_been_initted = file_exists($fw->PROJECT_DATA_DIR);
+		$this->fw->set('has_been_initted', $has_been_initted);
+		if($has_been_initted) {
+			$project_config = new Project_Config($fw->DB);
+			$project_config->load();
+			$this->fw->set('project_config', $project_config);
+		}
 	}
 
 	public function renderHtml(string $file_path, array $hive = []): void {

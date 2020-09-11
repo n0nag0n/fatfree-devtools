@@ -8,7 +8,7 @@ class Root_Controller extends Base_Controller {
 	public function index(\Base $fw): void {
 		
 		// if the main config file is missing, start initing this bad boy
-		if(!file_exists($fw->PROJECT_DATA_DIR)) {
+		if(!$fw->has_been_initted) {
 			$fw->reroute('/init-environment', false);
 		}
 

@@ -1,0 +1,26 @@
+<h1>Controllers</h1>
+<a href="/controllers/add" class="btn btn-primary m-2">Add</a>
+<check if="{{ count(@controllers) }}">
+	<true>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Action</th>
+					<th>Controller Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<repeat group="{{ @controllers }}" value="{{ @controller }}">
+				<tr>
+					<td>
+						<a href="/controllers/details/{{ @controller.base_name }}" class="btn btn-primary">View Details</a>
+					</td>
+					<td>
+						{{ @controller.base_name }}
+					</td>
+				</tr>
+				</repeat>
+			</tbody>	
+		</table>
+	</true>
+</check>	

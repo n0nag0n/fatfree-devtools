@@ -1,0 +1,22 @@
+<h1>Details for {{ @controller_name }}</h1>
+<a href="/controllers/details/{{ @controller_name }}/add-endpoint" class="btn btn-primary m-2">Add Endpoint</a>
+<check if="{{ count(@methods) }}">
+	<true>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Route Endpoints</th>
+				</tr>
+			</thead>
+			<tbody>
+				<repeat group="{{ @methods }}" value="{{ @method }}">
+				<tr>
+					<td>
+						{{ @method }}
+					</td>
+				</tr>
+				</repeat>
+			</tbody>	
+		</table>
+	</true>
+</check>	

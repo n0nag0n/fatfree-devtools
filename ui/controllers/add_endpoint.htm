@@ -1,0 +1,14 @@
+<h1>Add Endpoint Method to {{ @controller_name }}</h1>
+<form method="POST" action="/controllers/details/{{ @controller_name }}/add-endpoint">
+	<div class="form-group">
+		<label for="method_name">Endpoint Name (<code>Action</code> is automatically added)</label>
+		<div class="input-group mb-3">
+			<input type="text" name="method_name" class="form-control" id="method_name" placeholder="Ex: index" required>
+			<div class="input-group-append">
+				<span class="input-group-text">Action</span>
+			</div>
+		</div>
+		<small class="form-text text-muted">For route endpoints, it's best to keep the naming convention consistent. For example: <code>indexAction</code>, <code>orderAction</code>, <code>updateCompanyAction</code></small>
+	</div>
+	<button type="submit" class="btn btn-primary mb-5">Add</button>
+</form>
