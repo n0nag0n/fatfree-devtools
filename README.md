@@ -8,12 +8,12 @@ Installation is through composer
 ```
 composer global require n0nag0n/fatfree-devtools
 # or sudo if you run into permissions issues
-sudo composer global require n0nag0n/fatfree-devtools --dev
+sudo composer global require n0nag0n/fatfree-devtools
 ```
 
 ### Locally
 ```
-composer require n0nag0n/fatfree-devtools
+composer require n0nag0n/fatfree-devtools --dev
 ```
 
 ## Usage
