@@ -1,9 +1,14 @@
 <h1>Add a New Controller</h1>
 <form method="POST" action="/controllers/add">
 	<div class="form-group">
-		<label for="controller">Controller Name</label>
-		<input type="text" name="controller" class="form-control" id="controller" placeholder="Ex: Order_Controller" required>
-		<small class="form-text text-muted">It's helpful to keep your controller names consistent and to have the word "controller" in them. For example: <code>Index_Controller</code>, <code>Order_Controller</code>, <code>Company_Controller</code></small>
+		<label for="controller">Controller Name (<code>_Controller</code> is automatically added)</label>
+		<div class="input-group mb-3">
+			<input type="text" name="controller" class="form-control col-sm-3" id="controller" placeholder="Ex: Order, Company, Part" required>
+			<div class="input-group-append">
+				<span class="input-group-text">Controller</span>
+			</div>
+		</div>
+		<!-- <small class="form-text text-muted">It's helpful to keep your controller names consistent (if you use <code>_</code> then keep using them) in them. For example: <code>Index_Controller</code>, <code>Order_Controller</code>, <code>Company_Controller</code></small> -->
 	</div>
 	<button type="submit" class="btn btn-primary mb-5">Add</button>
 </form>

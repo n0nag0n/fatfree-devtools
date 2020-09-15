@@ -126,7 +126,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$Controller_Controller->createControllerFile('Index_Controller');
 		$this->createControllerFileOld($config['task'].'Task_Controller.php');
 
-		$fw->flash->addMessage('Project Built Successfully! You can now use <code>fatfree-devtools serve</code> to serve your new project!', 'success');
+		$fw->flash->addMessage('Project Built Successfully! You can now use <code>fatfree serve</code> to serve your new project!', 'success');
 		$fw->reroute('/', false);
 	}
 

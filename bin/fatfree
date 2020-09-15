@@ -16,13 +16,14 @@ $fw->PROJECT_BASE_DIR = getcwd().'/';
 
 $fw->route('GET / [cli]', 'n0nag0n\Devtools_Controller->help');
 $fw->route('GET /help [cli]', 'n0nag0n\Devtools_Controller->help');
+$fw->route('GET /version [cli]', 'n0nag0n\Devtools_Controller->version');
 $fw->route('GET /serve [cli]', 'n0nag0n\Devtools_Controller->serve');
 $fw->route('GET /serve/admin [cli]', 'n0nag0n\Devtools_Controller->adminServe');
 $fw->route('GET /cache/clear [cli]', 'n0nag0n\Devtools_Controller->cacheClear');
 
 $fw->ONERROR = function(\Base $fw) {
 	if($fw->ERROR['code'] === 404) {
-		die("Action Not Found. Use 'fatfree-devtools help' for known commands\n");
+		die("Action Not Found. Use 'fatfree help' for known commands\n");
 	} else {
 		print_r($fw->ERROR);
 	}

@@ -16,5 +16,5 @@
 	"autoload": {
 		"classmap" : [ "utils", "controllers", "models" ]
 	},
-	"bin": "bin/fatfree-devtools"
+	"bin": "bin/fatfree"
 }

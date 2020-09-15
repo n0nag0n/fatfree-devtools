@@ -109,7 +109,7 @@ class Controller_Controller extends Base_Controller {
 
 	public function createControllerFile(string $controller_name): bool {
 
-		$purified_controller_name = preg_replace("/\W/", '_', $controller_name);
+		$purified_controller_name = preg_replace("/\W/", '_', $controller_name).'_Controller';
 
 		$full_path = $this->fw->PROJECT_BASE_DIR.$this->fw->project_config->controller.$purified_controller_name.'.php';
 		if(file_exists($full_path)) {
