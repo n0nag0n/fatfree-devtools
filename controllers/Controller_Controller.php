@@ -123,7 +123,7 @@ class Controller_Controller extends Base_Controller {
 		return is_int($write_result);
 	}
 
-	protected function getControllerMethods(string $controller_name): array {
+	public function getControllerMethods(string $controller_name): array {
 		$arr = file($this->fw->PROJECT_BASE_DIR.$this->fw->project_config->controller.$controller_name.'.php');
 		$arr_methods = [];
 		foreach($arr as $line) {
@@ -134,7 +134,8 @@ class Controller_Controller extends Base_Controller {
 		return $arr_methods;
 	}
 
-	protected function getControllerEndpointMethods(string $controller_name): array {
+	public function getControllerEndpointMethods(string $controller_name): array {
+		$controller_name = str_replace('.php', '', $controller_name);
 		$arr_methods = $this->getControllerMethods($controller_name);
 		return array_filter($arr_methods, function($value) {
 			return strpos($value, 'Action') !== false;
