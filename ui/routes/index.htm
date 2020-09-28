@@ -16,7 +16,7 @@
 				<repeat group="{{ @routes }}" value="{{ @route }}">
 				<tr>
 					<td>
-						<a href="/routes/delete/{{ @route.hash }}" class="btn btn-primary">Delete</a>
+						<a href="/routes/delete/{{ @route.token }}" class="btn btn-primary">Delete</a>
 					</td>
 					<td>
 						{{ @route.method }}

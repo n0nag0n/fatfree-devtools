@@ -9,7 +9,11 @@ abstract class Base_Controller {
 
 	public function __construct(\Base $fw) {
 		$this->fw = $fw;
-		$has_been_initted = file_exists($fw->PROJECT_DATA_DIR);
+		$has_been_initted = $this->hasBeenInitted();
+		if($this->hasBeenInitted() === false && strpos($this->fw->URI, '/init-environment') === false) {
+			$this->fw->reroute('/init-environment', false);
+		}
+
 		$this->fw->set('has_been_initted', $has_been_initted);
 		if($has_been_initted) {
 			$project_config = new Project_Config($fw->DB);
@@ -22,6 +26,10 @@ abstract class Base_Controller {
 		$this->fw->content = $file_path;
 		$this->fw->mset($hive);
 		echo \Template::instance()->render('layout.htm');
+	}
+
+	public function hasBeenInitted(): bool {
+		return file_exists($this->fw->PROJECT_CONFIG);
 	}
 	
 }
