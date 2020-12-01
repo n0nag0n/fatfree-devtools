@@ -14,7 +14,7 @@ class Devtools_Controller {
 
 		$project_dir = getenv('FATFREE_DEVTOOLS_PROJECT_BASE_DIR');
 
-		$dir = realpath($project_dir.'/../public/');
+		$dir = realpath($project_dir.'/public/');
 		$port = $fw->GET['port'] ?? ($fw->GET['p'] ?? 8080);
 		$port = intval($port);
 
