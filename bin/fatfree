@@ -8,7 +8,7 @@ foreach([ __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php' ] 
 	}
 }
 
-define("DEVTOOLS_VERSION", '0.1.0');
+define("DEVTOOLS_VERSION", '0.1.2');
 
 $fw = Base::instance();
 $fw->DEBUG = 3;
