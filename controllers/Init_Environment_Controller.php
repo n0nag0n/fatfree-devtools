@@ -123,7 +123,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$this->makeProjectFileExecutable($config['bin'].'unit-test');
 		$this->createProjectFile($config['tests'].'unit-test-example.php', 'unit-test-example.php');
 		$Controller_Controller = new Controller_Controller($this->fw);
-		$Controller_Controller->createControllerFile('Index_Controller');
+		$Controller_Controller->createControllerFile('Index');
 		$this->createControllerFileOld($config['task'].'Task_Controller.php');
 
 		$fw->flash->addMessage('Project Built Successfully! You can now use <code>fatfree serve</code> to serve your new project!', 'success');
