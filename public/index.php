@@ -1,5 +1,10 @@
 <?php
-require(__DIR__.'/../vendor/autoload.php');
+// local and global installation paths
+foreach([ __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php' ] as $path) {
+	if(file_exists($path)) {
+		require($path);
+	}
+}
 
 $fw = Base::instance();
 $fw->config(__DIR__.'/../config/webtools_config.ini', true);
