@@ -1,38 +1,40 @@
 <h1>Routes</h1>
 <a href="/routes/add" class="btn btn-primary m-2">Add</a>
 <check if="{{ count(@routes) }}">
-	<true>
-		<table class="table">
-			<thead>
-				<tr>
-					<th></th>
-					<th>Method</th>
-					<th>Type</th>
-					<th>Route</th>
-					<th>Controller->Method</th>
-				</tr>
-			</thead>
-			<tbody>
-				<repeat group="{{ @routes }}" value="{{ @route }}">
-				<tr>
-					<td>
-						<a href="/routes/delete/{{ @route.token }}" class="btn btn-primary">Delete</a>
-					</td>
-					<td>
-						{{ @route.method }}
-					</td>
-					<td>
-						{{ @route.type }}
-					</td>
-					<td>
-						{{ @route.route }}
-					</td>
-					<td>
-						{{ @route.controller }}
-					</td>
-				</tr>
-				</repeat>
-			</tbody>	
-		</table>
-	</true>
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Method</th>
+				<th>Alias</th>
+				<th>Type</th>
+				<th>Route</th>
+				<th>Controller->Method</th>
+			</tr>
+		</thead>
+		<tbody>
+			<repeat group="{{ @routes }}" value="{{ @route }}">
+			<tr>
+				<td>
+					<a href="/routes/delete/{{ @route.token }}" class="btn btn-primary">Delete</a>
+				</td>
+				<td>
+					{{ @route.method }}
+				</td>
+				<td>
+					{{ @route.alias }}
+				</td>
+				<td>
+					{{ @route.type }}
+				</td>
+				<td>
+					{{ @route.route }}
+				</td>
+				<td>
+					{{ @route.controller }}
+				</td>
+			</tr>
+			</repeat>
+		</tbody>	
+	</table>
 </check>	

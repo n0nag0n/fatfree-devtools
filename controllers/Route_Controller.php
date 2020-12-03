@@ -36,6 +36,7 @@ class Route_Controller extends Base_Controller {
 		$type = $post['type'];
 		$path = $post['path'];
 		$namespace = $post['namespace'] ?: '';
+		$alias = $post['alias'] ? '@'.$post['alias'].': ' : '';
 		$controller_endpoint = $post['controller_endpoint'];
 
 		if(empty($methods)) {
@@ -47,7 +48,7 @@ class Route_Controller extends Base_Controller {
 			throw new \Exception('Missing data.');
 		}
 
-		$result = $this->addRoute($methods, $type, $path, $namespace.$controller_endpoint);
+		$result = $this->addRoute($methods, $type, $path, $namespace.$controller_endpoint, $alias);
 
 		if($result === true) {
 			$message = 'Route successfully created';
@@ -111,8 +112,9 @@ class Route_Controller extends Base_Controller {
 
 			$final_route = [];
 			$final_route['method'] = $explode[0];
-			$final_route['route'] = $explode[1];
-			$final_route['type'] = $explode[2] ?? '';
+			$final_route['alias'] = end(preg_grep("/\@\w+/i", $explode));
+			$final_route['route'] = end(preg_grep("~/.+~", $explode));
+			$final_route['type'] = end(preg_grep("/\[.+\]/", $explode));
 			$final_route['controller'] = $controller;
 			$final_route['token'] = $line_token;
 			$routes[] = $final_route;
@@ -120,8 +122,8 @@ class Route_Controller extends Base_Controller {
 		return $routes;
 	}
 
-	public function addRoute(array $methods, string $type, string $path, string $controller) : bool {
-		$route_string = $this->createRouteConfigString($methods, $type, $path, $controller);
+	public function addRoute(array $methods, string $type, string $path, string $controller, string $alias = '') : bool {
+		$route_string = $this->createRouteConfigString($methods, $type, $path, $controller, $alias);
 		$routes_file = $this->routes_file_path;
 		$result = $this->fw->write($routes_file, $route_string, true);
 		return is_int($result);
@@ -139,12 +141,12 @@ class Route_Controller extends Base_Controller {
 		return is_int($result);
 	}
 
-	public function createRouteConfigString(array $methods, string $type, string $path, string $controller): string {
+	public function createRouteConfigString(array $methods, string $type, string $path, string $controller, string $alias = ''): string {
 		$path = preg_replace("/\-+/", '-', preg_replace("/[^\w\-\@\/\:]+/", '-', $path));
 		if(substr($path, 0, 1) !== '/') {
 			$path = '/'.$path;
 		}
-		return "\n".join('|', $methods).' '.$path.' '.$type.' = '.$controller;
+		return "\n".join('|', $methods).' '.(!empty($alias) ? ' '.$alias : '').$path.' '.$type.' = '.$controller;
 	}
 
 	public function generateLineHash(string $line): string {

@@ -20,6 +20,11 @@
 		</div>
 	</fieldset>
 	<div class="form-group">
+		<label for="alias">Alias</label>
+		<input type="text" name="alias" class="form-control col-sm-3" id="alias" placeholder="login, sign_up, display_all_companies, etc">
+		<p class="form-text text-muted">This is optional. If you alias your routes, you can call use them in your code even if the url changes. For example if your alias is <code>login</code>, if later on the URL changed from <code>/login</code> to <code>/log-in</code>, anywhere you used the alias for <code>login</code> will reflect the new URL.</p>
+	</div>
+	<div class="form-group">
 		<label for="type">Type</label>
 		<select name="type" class="form-control col-sm-3" id="type" required>
 			<option value="[sync]">Ordinary/Regular Synchronous</option>
