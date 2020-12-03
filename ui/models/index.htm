@@ -1,0 +1,23 @@
+<h1>Models</h1>
+<a href="/models/add" class="btn btn-primary m-2">Add</a>
+<check if="{{ count(@models) }}">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Model Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<repeat group="{{ @models }}" value="{{ @model }}">
+			<tr>
+				<!-- <td>
+					<a href="/routes/delete/{{ @route.token }}" class="btn btn-primary">Delete</a>
+				</td> -->
+				<td>
+					{{ @model.base_name }}
+				</td>
+			</tr>
+			</repeat>
+		</tbody>	
+	</table>
+</check>	

@@ -1,0 +1,14 @@
+<h1>Add a New Model</h1>
+<form method="POST" action="/models/add">
+	<div class="form-group">
+		<label for="model">Model Name</label>
+		<input type="text" name="model" class="form-control col-sm-3" id="model" placeholder="Ex: Company, User, Client, etc.">
+		<p class="form-text text-muted">Usually this is the name of the database table, without the plural meaning.</p>
+	</div>
+	<div class="form-group">
+		<label for="table">Table Name</label>
+		<input type="text" name="table" class="form-control col-sm-3" id="table" placeholder="Ex: companies, users, clients, etc.">
+		<p class="form-text text-muted"></p>
+	</div>
+	<button type="submit" class="btn btn-primary mb-5">Add</button>
+</form>

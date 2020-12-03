@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This is an example base controller to help establish a foundation. You can use this
