@@ -126,6 +126,11 @@ class Init_Environment_Controller extends Base_Controller {
 		$Controller_Controller->createControllerFile('Index');
 		$this->createControllerFileOld($config['task'].'Task_Controller.php');
 
+		// A couple helper files
+		$this->createProjectFile($config['utils'].'Date.php', 'Date.php');
+		$this->createProjectFile($config['utils'].'Template_Helper.php', 'Template_Helper.php');
+		$this->createProjectFile($config['model'].'Mapper_Shim.php', 'Mapper_Shim.php');
+
 		$fw->flash->addMessage('Project Built Successfully! You can now use <code>fatfree serve</code> to serve your new project!', 'success');
 		$fw->reroute('/', false);
 	}
