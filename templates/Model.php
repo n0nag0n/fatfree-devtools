@@ -1,6 +1,6 @@
 <?php
 
-final class #model_name# extends Model_Shim {
+final class #model_name# extends Mapper_Shim {
 
 	public function __construct(\DB\SQL $DB) {
 		parent::__construct($DB, '#table_name#');

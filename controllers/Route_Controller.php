@@ -112,7 +112,7 @@ class Route_Controller extends Base_Controller {
 
 			$final_route = [];
 			$final_route['method'] = $explode[0];
-			$final_route['alias'] = end(preg_grep("/\@\w+/i", $explode));
+			$final_route['alias'] = end(preg_grep("/\@\w+\:/i", $explode));
 			$final_route['route'] = end(preg_grep("~/.+~", $explode));
 			$final_route['type'] = end(preg_grep("/\[.+\]/", $explode));
 			$final_route['controller'] = $controller;
