@@ -1,6 +1,12 @@
 # FatFree Developer Tools
 This is a package that can aid the creation and management of your FatFree projects.
 
+## Usage Video
+I created a basic guide to help those that want to get started with this devtools package.
+[![Dev-Tools for Fat-Free](https://img.youtube.com/vi/2kU5S-byTwI/0.jpg)](https://youtu.be/2kU5S-byTwI)
+
+[https://youtu.be/2kU5S-byTwI](https://youtu.be/2kU5S-byTwI)
+
 ## Installation
 Installation is through composer. If you don't have composer, run the following command:
 ```
