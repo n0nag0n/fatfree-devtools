@@ -11,7 +11,8 @@
     ],
     "require": {
         "bcosca/fatfree-core": "^3.7",
-        "ikkez/f3-flash": "^1.0"
+        "ikkez/f3-flash": "^1.0",
+        "n0nag0n/fatfree-environment-check": "^0.1.0"
 	},
 	"autoload": {
 		"classmap" : [ "utils", "controllers", "models" ]

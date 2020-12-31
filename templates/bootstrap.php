@@ -15,5 +15,11 @@ define('PROJECT_DEVTOOLS_DATA_DIR', PROJECT_ROOT_DIR.'.fatfree-devtools/');
 // This will hold the config settings necessary for your routes, variables, connection settings, etc.
 $fw->config(PROJECT_ROOT_DIR.'{{ @cnf_config }}main_config.ini', true);
 
+// Allows the environment check to run in an iframe only in a development environment.
+if($fw->DEBUG === 3) {
+	n0nag0n\Environment_Check::instance();
+	$fw->XFRAME = '';
+}
+
 // This file will be all the other plugins, services, tools that you need to put in the Fat-Free class
 require(PROJECT_ROOT_DIR.'{{@cnf_config }}{{ @cnf_services }}');

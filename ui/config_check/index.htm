@@ -1,0 +1,25 @@
+<form>
+	<p>In order to view this configuration check page properly, you need to have your project being served somehow. If you use <code>fatfree serve</code>, your hostname will be <code>localhost</code> and your port <code>8080</code> by default.</p>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="hostname">Hostname to Project URI</label>
+				<input type="text" name="hostname" class="form-control" id="hostname" placeholder="Ex: localhost" value="{{ @GET.hostname ?: 'localhost' }}" required>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="port">Port to Project URI</label>
+				<input type="text" name="port" class="form-control" id="port" placeholder="Ex: 8000" value="{{ @GET.port ?: 8080 }}" required>
+			</div>
+		</div>
+		<div class="col-sm-4 align-bottom">
+			<div class="form-group">
+				<label>&nbsp;</label>
+				<button type="submit" class="btn btn-primary mt-4">Submit</button>
+			</div>
+		</div>
+	</div>
+	
+</form>
+<iframe src="http://{{ @GET.hostname ?: 'localhost' }}:{{ @GET.port ?: 8080 }}/environment-check" border="0" style="width:100%;border:0;height:2000px;"></iframe>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "715686ed047d3eac47dccfe95c20034e",
+    "content-hash": "4126542fb094f2da558af47116a34d40",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -70,6 +70,46 @@
                 "session"
             ],
             "time": "2017-12-06T17:50:51+00:00"
+        },
+        {
+            "name": "n0nag0n/fatfree-environment-check",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/n0nag0n/fatfree-environment-check.git",
+                "reference": "2f03a59f6557bba2f93acfc7459f6b7fbb4d57c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/n0nag0n/fatfree-environment-check/zipball/2f03a59f6557bba2f93acfc7459f6b7fbb4d57c9",
+                "reference": "2f03a59f6557bba2f93acfc7459f6b7fbb4d57c9",
+                "shasum": ""
+            },
+            "require": {
+                "bcosca/fatfree-core": "^3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "n0nag0n\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "n0nag0n",
+                    "email": "n0nag0n@sky-9.com"
+                }
+            ],
+            "description": "A small library that adds a route that runs a series of checks against your environment to make sure it's up to snuff.",
+            "support": {
+                "issues": "https://github.com/n0nag0n/fatfree-environment-check/issues",
+                "source": "https://github.com/n0nag0n/fatfree-environment-check/tree/0.1"
+            },
+            "time": "2020-12-31T14:53:22+00:00"
         }
     ],
     "packages-dev": [],
@@ -79,5 +119,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
