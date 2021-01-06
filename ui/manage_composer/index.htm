@@ -1,0 +1,60 @@
+
+<p><strong>Global commands :</strong>
+	<a href="?composer=setup">Setup</a> 
+	- <a href="?composer=show">Show</a>
+	- <a href="?composer=clear_cache">Clear-cache</a>
+	- <a href="?composer=install">Install</a>
+	- <a href="?composer=update">Update</a>
+	- <a href="?composer=validate">Validate</a>
+	- <a href="?composer=diagnose">Diagnose</a>
+	- <a href="?composer=archive">Archive</a>
+	- <a href="?composer=outdated">Outdated</a>
+	- <a href="?composer=self_update">Self-update</a>
+</p>
+
+<hr>
+<check if="{{ @command_return }}">
+	<h2>Command Return Value</h2> 
+	<pre style="background-color:black; color:white; padding: 8px">{{ @command_return }}</pre>
+</check>
+		
+<hr>
+
+<form method="get">
+	<input type="hidden" value="" name="package_cmd">
+	<p><strong>Package commands : </strong>
+		<label>Package name: <input type="text" name="package"></label><br>
+			<input type="button" value="require" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="remove" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="update" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="show" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="archive" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="prohibits" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="depends" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="show_dependencies" onclick="this.form.package_cmd.value=this.value; this.form.submit();">
+	</p>
+</form>
+
+<hr>
+
+<form method="get">
+	<input type="hidden" value="" name="repository_cmd">
+	<p><strong>Repositories commands</strong> :  
+		<label>Repository type : <select name="type"><option></option><option>path</option><option>vcs</option><option>pear</option><option>git</option></select></label> ; 
+		<label>Repository url : <input type="text" name="url"></label><br>
+			<input type="button" value="add" onclick="this.form.repository_cmd.value=this.value; this.form.submit();">
+			<input type="button" value="remove" onclick="this.form.repository_cmd.value=this.value; this.form.submit();">
+	</p>
+</form>
+
+<hr>
+
+<form method="get">
+	<p><strong>Other command</strong> :  
+		<label>Command line : <input type="text" name="cmd" style="width:50%;"></label><br>
+			<input type="submit" value="send command">
+	</p>
+</form>
+
+<p><strong>Composer.json file (from '{{ @composer_file_path }}') : </strong>
+	<pre style="background-color: antiquewhite;">{{ @composer_file_contents }}</pre></p>

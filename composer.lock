@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4126542fb094f2da558af47116a34d40",
+    "content-hash": "306277826ef42c4c2616defeb4b2ca8d",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -110,6 +110,42 @@
                 "source": "https://github.com/n0nag0n/fatfree-environment-check/tree/0.1"
             },
             "time": "2020-12-31T14:53:22+00:00"
+        },
+        {
+            "name": "net-tools/composer-interface",
+            "version": "1.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/net-tools/composer-interface.git",
+                "reference": "ff4eb8049a98392df9c7279ebee4e282d28a8088"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/net-tools/composer-interface/zipball/ff4eb8049a98392df9c7279ebee4e282d28a8088",
+                "reference": "ff4eb8049a98392df9c7279ebee4e282d28a8088",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.4.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre",
+                    "email": "dev@net-tools.ovh",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP shell interface to Composer when SSH is not available on your host ",
+            "support": {
+                "issues": "https://github.com/net-tools/composer-interface/issues",
+                "source": "https://github.com/net-tools/composer-interface/tree/master"
+            },
+            "time": "2017-11-08T12:55:51+00:00"
         }
     ],
     "packages-dev": [],
