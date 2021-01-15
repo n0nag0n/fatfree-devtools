@@ -8,8 +8,14 @@ use stdClass;
 class Manage_Composer_Controller extends Base_Controller {
 
 	public function indexAction(\Base $fw): void {
-		require(__DIR__.'/../vendor/net-tools/composer-interface/src/autoload.php');
-		$PROJECT = array_pop(explode(DIRECTORY_SEPARATOR, rtrim($fw->PROJECT_BASE_DIR, DIRECTORY_SEPARATOR)));
+		foreach([ __DIR__.'/../vendor/', getenv('HOME').'/.config/composer/vendor/' ] as $dir_path) {
+			$final_path = $dir_path.'net-tools/composer-interface/src/autoload.php';
+			if(file_exists($final_path)) {
+				require($final_path);
+				break;
+			}
+		}
+
 		$root = rtrim($fw->PROJECT_BASE_DIR, '/');
 		try
 		{
