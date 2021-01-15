@@ -125,6 +125,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$Controller_Controller = new Controller_Controller($this->fw);
 		$Controller_Controller->createControllerFile('Index');
 		$this->createControllerFileOld($config['task'].'Task_Controller.php');
+		$this->createProjectFile('.gitignore', 'vcsignore');
 
 		// A couple helper files
 		$this->createProjectFile($config['utils'].'Date.php', 'Date.php');

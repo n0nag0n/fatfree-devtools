@@ -1,0 +1,5 @@
+.fatfree-devtools/
+{{ @cnf_config }}{{ @cnf_general_config }}
+{{ @cnf_temp }}
+{{ @cnf_log }}
+{{ @cnf_composer }}
