@@ -39,7 +39,6 @@ class Manage_Composer_Controller extends Base_Controller {
 				}
 			}
 			$config->composer_bin_location = $composer_bin_location;
-			$config->composer_home = rtrim($fw->PROJECT_BASE_DIR, '/');
 
 			// create interface and set the composer project to be in folder PROJECT
 			$composer = new \ComposerInterfaceAdapter($config, $root);

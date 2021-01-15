@@ -36,10 +36,10 @@
 	<div class="form-group">
 		<label for="debug">DEBUG</label>
 		<select name="debug" class="form-control" id="debug">
-			<option value="0">0 - Suppresses logs of the stack trace (Production recommend).</option>
-			<option value="1" {{ @config.debug === '1' ? 'selected' : '' }}>1 - Logs files and lines.</option>
+			<option value="3" {{ @config.debug === '3' ? 'selected' : '' }}>3 - Logs detailed info of the objects as well. (Recommended for Developement)</option>
 			<option value="2" {{ @config.debug === '2' ? 'selected' : '' }}>2 - Logs classes and functions as well.</option>
-			<option value="3" {{ @config.debug === '3' ? 'selected' : '' }}>3 - Logs detailed info of the objects as well. (Development recommended)</option>
+			<option value="1" {{ @config.debug === '1' ? 'selected' : '' }}>1 - Logs files and lines.</option>
+			<option value="0">0 - Suppresses logs of the stack trace (Recommended for Production).</option>
 		</select> 
 	</div>
 	<div class="form-group">
