@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 namespace n0nag0n;
-use \Nettools\ComposerInterface\ComposerInterface;
 use stdClass;
 
 class Manage_Composer_Controller extends Base_Controller {

@@ -1,0 +1,32 @@
+<h1>Fat-Free Plugins</h1>
+<p>Here you'll find a healthy amount of plugins for the Fat-Free community. Simply click the install link and it will install the plugin via composer for you.</p>
+<h4>Sections</h4>
+<ul>
+	<repeat group="{{ @projects }}" value="{{ @results }}" key="{{ @subject }}">
+		<li><a href="#{{ @subject }}">{{ ucfirst(@subject) }}</a></li>
+	</repeat>
+</ul>
+<p><a href="#examples">Example Projects Using Fat-Free</a></p>
+<repeat group="{{ @projects }}" value="{{ @results }}" key="{{ @subject }}">
+	<div class="card mt-3">
+		<div class="card-header">
+			<h2 class="card-title" id="{{ @subject }}">{{ ucfirst(@subject) }}</h2>
+		</div>
+		<div class="card-body">
+			<repeat group="{{ @results }}" value="{{ @project }}">
+				<include href="plugins/_project.htm" with="project={{ @project }}" />
+			</repeat>
+		</div>
+	</div>
+</repeat>
+<div class="card mt-3">
+	<div class="card-header">
+		<h2 class="card-title" id="examples">Example Projects</h2>
+		<p>These are example projects that have been built with the Fat-Free Framework.</p>
+	</div>
+	<div class="card-body">
+		<repeat group="{{ @examples }}" value="{{ @project }}">
+			<include href="plugins/_project.htm" with="project={{ @project }}" />
+		</repeat>
+	</div>
+</div>
