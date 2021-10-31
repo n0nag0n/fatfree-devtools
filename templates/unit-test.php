@@ -21,8 +21,14 @@ function echoLine(string $text) {
 	$dateObj = DateTime::createFromFormat('0.u00 U', microtime());
 	$dateObj->setTimeZone(new DateTimeZone('America/Denver'));
 	if($text) {
-		echo '[ '.$dateObj->format('Y-m-d H:i:s.v').' Mem: '.memory_get_usage().' ]: '.$text."\n";
+		echo '[ '.$dateObj->format('Y-m-d H:i:s.v').' Mem: '.convertMemoryUsage(memory_get_usage()).' ]: '.$text."\n";
 	}
+}
+
+// https://www.php.net/manual/fr/function.memory-get-usage.php#96280
+function convertMemoryUsage($size) {
+    $unit=array('b','kb','mb','gb','tb','pb');
+    return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
 }
 
 function formatTextColor($str, $color) {
