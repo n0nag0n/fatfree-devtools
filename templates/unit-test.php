@@ -19,10 +19,16 @@ function calculateMicrotimeDifference(float $start_time, float $end_time): float
 
 function echoLine(string $text) {
 	$dateObj = DateTime::createFromFormat('0.u00 U', microtime());
-	$dateObj->setTimeZone(new DateTimeZone('America/Denver'));
+	$dateObj->setTimeZone(new DateTimeZone(date_default_timezone_get()));
 	if($text) {
-		echo '[ '.$dateObj->format('Y-m-d H:i:s.v').' Mem: '.memory_get_usage().' ]: '.$text."\n";
+		echo '[ '.$dateObj->format('Y-m-d H:i:s.v').' ('.convertMemoryUsage(memory_get_usage()).') ]: '.$text."\n";
 	}
+}
+
+// https://www.php.net/manual/fr/function.memory-get-usage.php#96280
+function convertMemoryUsage($size) {
+    $unit=array('b','kb','mb','gb','tb','pb');
+    return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
 }
 
 function formatTextColor($str, $color) {
@@ -94,8 +100,8 @@ foreach ($test->results() as $result) {
 	}
 	$filename = basename(explode(':', $result['source'])[0]);
     if($result['status']) {
-        echoLine(formatTextColor('Pass ('.$source_time_stamps[$filename].' seconds) - '.$result['source'].$desc, 'green'));
+        echoLine(formatTextColor('Pass ('.$source_time_stamps[$filename].'s) - '.str_replace($fw->get('ROOT'), '', $result['source']).$desc, 'green'));
 	} else {
-		echoLine(formatTextColor('FAIL ('.$source_time_stamps[$filename].' seconds) - '.$result['source'].$desc, 'red'));
+		echoLine(formatTextColor('FAIL ('.$source_time_stamps[$filename].'s) - '.str_replace($fw->get('ROOT'), '', $result['source']).$desc, 'red'));
 	}
 }
