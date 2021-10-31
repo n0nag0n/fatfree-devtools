@@ -19,7 +19,7 @@ function calculateMicrotimeDifference(float $start_time, float $end_time): float
 
 function echoLine(string $text) {
 	$dateObj = DateTime::createFromFormat('0.u00 U', microtime());
-	$dateObj->setTimeZone(new DateTimeZone('America/Denver'));
+	$dateObj->setTimeZone(new DateTimeZone(date_default_timezone_get()));
 	if($text) {
 		echo '[ '.$dateObj->format('Y-m-d H:i:s.v').' ('.convertMemoryUsage(memory_get_usage()).') ]: '.$text."\n";
 	}
