@@ -5,13 +5,8 @@ namespace n0nag0n;
 
 class Init_Environment_Controller extends Base_Controller {
 
-	public function beforeroute(\Base $fw) {
-		
-		
-	}
-	
 	public function indexAction(\Base $fw): void {
-		$this->renderHtml('init_environment/index.htm');
+		$this->renderHtml('init_environment/index.htm', [ 'PAGE_TITLE' => 'Initialize Environment' ]);
 	}
 
 	public function pageAction(\Base $fw, array $args = []): void {
@@ -59,7 +54,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$project_config = new Project_Config($fw->DB);
 		$project_config->load();
 
-		$this->renderHtml($page_ui, [ 'config' => $project_config->cast() ] );
+		$this->renderHtml($page_ui, [ 'config' => $project_config->cast(), 'PAGE_TITLE' => $page.' - Configure Environment' ] );
 	}
 
 	public function update(\Base $fw): void {
