@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>{{ isset(@PAGE_TITLE) ? @PAGE_TITLE.' - ' : '' }}Fat-Free Dev Tools</title>
 		<!-- Bootstrap core CSS -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/main.css">
 		<link href="/css/prism.min.css" rel="stylesheet" />
 	</head>
@@ -36,7 +36,7 @@
 						<a class="nav-link" href="/config-check">Config Check</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/adminer/" target="_blank">Adminer</a>
+						<a class="nav-link" href="{{ @config.database_management ?: '/adminer/' }}" target="_blank">Adminer</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/manage-composer" target="_blank">Manage Composer</a>
@@ -71,6 +71,6 @@
 		</main><!-- /.container -->
 		<script src="/js/prism.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 </html>
