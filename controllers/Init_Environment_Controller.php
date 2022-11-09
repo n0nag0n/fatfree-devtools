@@ -54,7 +54,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$project_config = new Project_Config($fw->DB);
 		$project_config->load();
 
-		$this->renderHtml($page_ui, [ 'config' => $project_config->cast(), 'PAGE_TITLE' => $page.' - Configure Environment' ] );
+		$this->renderHtml($page_ui, [ 'config' => $project_config, 'PAGE_TITLE' => $page.' - Configure Environment' ] );
 	}
 
 	public function update(\Base $fw): void {

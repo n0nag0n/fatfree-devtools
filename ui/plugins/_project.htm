@@ -1,8 +1,8 @@
 <h3>{{ @project.title }}</h3>
 <p>{{ @project.description }}</p>
-<a href="{{ @project.github }}" class="btn btn-secondary" target="_blank">Github</a> 
-<a href="{{ @project.web_site }}" class="btn btn-secondary" target="_blank">Website</a> 
-<check if="{{ @project.composer_package }}">
+<a href="{{ @project.github ?? 'javascript:void(0);' }}" class="btn btn-secondary" target="_blank">Github</a> 
+<a href="{{ @project.web_site ?? 'javascript:void(0);' }}" class="btn btn-secondary" target="_blank">Website</a> 
+<check if="{{ !empty(@project.composer_package) }}">
 	<check if="{{ \n0nag0n\Plugin_Controller::hasPackageInstalled(@project.composer_package) }}">
 		<true>
 			<button class="btn btn-success">Installed</button>
@@ -12,8 +12,8 @@
 		</false>
 	</check>
 </check>
-<check if="{{ stripos(@project.web_site, 'github.com') !== false || @project.github }}">
-	<set package="{{ @project.composer_package ?: explode('/', (@project.github ?: @project.web_site), 4)[3] }}" />
+<check if="{{ (!empty(@project.web_site) && stripos(@project.web_site, 'github.com') !== false) || !empty(@project.github) }}">
+	<set package="{{ @project.composer_package ?? explode('/', (@project.github ?? @project.web_site), 4)[3] }}" />
 	<div class="d-inline-block position-relative">
 	<iframe src="https://ghbtns.com/github-btn.html?user={{ explode('/', @package)[0] }}&repo={{ explode('/', @package)[1] }}&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" class="position-absolute" style="top: -19px;"></iframe>
 </div>

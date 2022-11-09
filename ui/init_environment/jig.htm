@@ -8,7 +8,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text">{{ @PROJECT_BASE_DIR }}</span>
 			</div>
-			<input type="text" class="form-control" id="jig" name="jig" value="{{ @config.jig ?: 'app/jig/' }}" required>
+			<input type="text" class="form-control" id="jig" name="jig" value="{{ @config.jig ?? 'app/jig/' }}" required>
 		</div>
 	</div>
 	<a href="/init-environment/choose-database" class="btn btn-primary mb-5">&laquo; Back</a>

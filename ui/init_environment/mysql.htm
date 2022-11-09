@@ -8,23 +8,23 @@ mysql> GRANT ALL PRIVILEGES ON `some_cool_database`.* TO 'some_user'@'localhost'
 	<input type="hidden" name="next_page" value="security">
 	<div class="form-group">
 		<label for="mysql_host">Database Host</label>
-		<input type="text" name="mysql_host" class="form-control" id="mysql_host" value="{{ @config.mysql_host ?: 'localhost' }}">
+		<input type="text" name="mysql_host" class="form-control" id="mysql_host" value="{{ @config.mysql_host ?? 'localhost' }}">
 	</div>
 	<div class="form-group">
 		<label for="mysql_host">Database Name</label>
-		<input type="text" name="mysql_name" class="form-control" id="mysql_name" value="{{ @config.mysql_name ?: 'some_cool_database' }}">
+		<input type="text" name="mysql_name" class="form-control" id="mysql_name" value="{{ @config.mysql_name ?? 'some_cool_database' }}">
 	</div>
 	<div class="form-group">
 		<label for="mysql_username">Database Username</label>
-		<input type="text" name="mysql_username" class="form-control" id="mysql_username" value="{{ @config.mysql_username ?: 'some_user' }}">
+		<input type="text" name="mysql_username" class="form-control" id="mysql_username" value="{{ @config.mysql_username ?? 'some_user' }}">
 	</div>
 	<div class="form-group">
 		<label for="mysql_password">Database Password</label>
-		<input type="password" name="mysql_password" class="form-control" id="mysql_password" value="{{ @config.mysql_password ?: 'somecoolpassword' }}">
+		<input type="password" name="mysql_password" class="form-control" id="mysql_password" value="{{ @config.mysql_password ?? 'somecoolpassword' }}">
 	</div>
 	<div class="form-group">
 		<label for="mysql_port">Database Port</label>
-		<input type="number" name="mysql_port" class="form-control" id="mysql_port" value="{{ @config.mysql_port ?: '3306' }}">
+		<input type="number" name="mysql_port" class="form-control" id="mysql_port" value="{{ @config.mysql_port ?? '3306' }}">
 	</div>
 	<div class="form-group">
 		<label for="mysql_charset">Database Character Set</label>
@@ -32,7 +32,7 @@ mysql> GRANT ALL PRIVILEGES ON `some_cool_database`.* TO 'some_user'@'localhost'
 	</div>
 	<div class="form-group">
 		<label for="mysql_charset">Database Management URL (Optional)</label>
-		<input type="text" name="database_management" class="form-control" id="database_management" placeholder="/adminer/" value="{{ @config.database_management ?: '' }}">
+		<input type="text" name="database_management" class="form-control" id="database_management" placeholder="/adminer/" value="{{ @config.database_management ?? '' }}">
 	</div>
 	<a href="/init-environment/choose-database" class="btn btn-primary mb-5">&laquo; Back</a>
 	<button type="submit" class="btn btn-primary mb-5">Next &raquo;</button>

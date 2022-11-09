@@ -112,13 +112,17 @@ class Route_Controller extends Base_Controller {
 
 			$final_route = [];
 			$final_route['method'] = $explode[0];
-			$final_route['alias'] = end(preg_grep("/\@\w+\:/i", $explode));
-			$final_route['route'] = end(preg_grep("~/.+~", $explode));
-			$final_route['type'] = end(preg_grep("/\[.+\]/", $explode));
+			$aliases_grep = preg_grep("/\@\w+\:/i", $explode);
+			$final_route['alias'] = end($aliases_grep);
+			$routes_grep = preg_grep("~/.+~", $explode);
+			$final_route['route'] = end($routes_grep);
+			$types_grep = preg_grep("/\[.+\]/", $explode);
+			$final_route['type'] = end($types_grep);
 			$final_route['controller'] = $controller;
 			$final_route['token'] = $line_token;
 			$routes[] = $final_route;
 		}
+
 		return $routes;
 	}
 

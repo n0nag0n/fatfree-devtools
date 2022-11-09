@@ -16,6 +16,7 @@ class Manage_Composer_Controller extends Base_Controller {
 		}
 
 		$root = rtrim($fw->PROJECT_BASE_DIR, '/');
+		$ret = '';
 		try
 		{
 			// create config object and set composer home (here, the parent folder of document root, so that other composer projects may benefit from global caching)
@@ -42,22 +43,21 @@ class Manage_Composer_Controller extends Base_Controller {
 			// create interface and set the composer project to be in folder PROJECT
 			$composer = new \ComposerInterfaceAdapter($config, $root);
 			
+			error_reporting(0);
 			// global commands (not relative to a package or repository)
-			if ( $_REQUEST['composer'] )
+			if ( !empty($_REQUEST['composer']) ) {
 				$ret = $composer->{$_REQUEST['composer']}();
-
+			}
 
 			// package commands
-			else if ( $_REQUEST['package_cmd'] && $_REQUEST['package'] )
+			else if ( !empty($_REQUEST['package_cmd']) && !empty($_REQUEST['package']) ) {
 				$ret = $composer->{'package_' . $_REQUEST['package_cmd']}($_REQUEST['package']);
-
 			
 			// repositories commands
-			else if ( $_REQUEST['repository_cmd'] && $_REQUEST['url'] )
-				switch ( $_REQUEST['repository_cmd'] )
-				{
+			} else if ( !empty($_REQUEST['repository_cmd']) && !empty($_REQUEST['url']) ) {
+				switch ( $_REQUEST['repository_cmd'] ) {
 					case 'add' : 
-						if ( $_REQUEST['type'] )
+						if ( !empty($_REQUEST['type']) )
 							$ret = $composer->repository_add($_REQUEST['type'], $_REQUEST['url']);
 						break;
 						
@@ -66,15 +66,16 @@ class Manage_Composer_Controller extends Base_Controller {
 						break;
 				}
 			
-			
 			// user command (not supported by this library)
-			else if ( $_REQUEST['cmd'] )
+			} else if ( !empty($_REQUEST['cmd']) ) {
 				$ret = $composer->command($_REQUEST['cmd']);
+			}
 		}
-		catch(\Throwable $e)
-		{
+		catch(\Throwable $e) {
 			$ret = $e->getMessage() . "\n---\nTrace : " . $e->getTraceAsString();
 		}
+
+		error_reporting(E_ALL);
 
 		if(file_exists($root . '/composer.json')) {
 			$composer_file_contents = file_get_contents($root . '/composer.json');

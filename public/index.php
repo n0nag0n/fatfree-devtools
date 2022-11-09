@@ -7,6 +7,9 @@ foreach([ __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php', g
 }
 
 $fw = Base::instance();
+
+error_reporting(E_ALL);
+
 $fw->config(__DIR__.'/../config/webtools_config.ini', true);
 
 $fw->set('flash', \Flash::instance());
