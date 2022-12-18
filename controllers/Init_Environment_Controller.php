@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
 
 class Init_Environment_Controller extends Base_Controller {
-
 	public function indexAction(\Base $fw): void {
 		$this->renderHtml('init_environment/index.htm', [ 'PAGE_TITLE' => 'Initialize Environment' ]);
 	}
@@ -143,7 +143,7 @@ class Init_Environment_Controller extends Base_Controller {
 		if(!empty($relative_path) && !file_exists($file_path)) {
 			$contents = $this->fw->read(__DIR__.'/../templates/'.$template_file_path);
 			$contents = str_replace('<?php', '<test-php', $contents);
-			
+
 			$parsed_contents = \Template::instance()->parse($contents);
 			$contents = \Template::instance()->build($parsed_contents);
 			$contents = \Template::instance()->resolve($contents);

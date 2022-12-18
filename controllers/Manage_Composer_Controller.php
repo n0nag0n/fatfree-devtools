@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
+
 use stdClass;
 
 class Manage_Composer_Controller extends Base_Controller {
-
 	public function indexAction(\Base $fw): void {
 		foreach([ __DIR__.'/../vendor/', getenv('HOME').'/.config/composer/vendor/' ] as $dir_path) {
 			$final_path = $dir_path.'net-tools/composer-interface/src/autoload.php';
@@ -42,7 +43,7 @@ class Manage_Composer_Controller extends Base_Controller {
 
 			// create interface and set the composer project to be in folder PROJECT
 			$composer = new \ComposerInterfaceAdapter($config, $root);
-			
+
 			error_reporting(0);
 			// global commands (not relative to a package or repository)
 			if ( !empty($_REQUEST['composer']) ) {
@@ -52,20 +53,20 @@ class Manage_Composer_Controller extends Base_Controller {
 			// package commands
 			else if ( !empty($_REQUEST['package_cmd']) && !empty($_REQUEST['package']) ) {
 				$ret = $composer->{'package_' . $_REQUEST['package_cmd']}($_REQUEST['package']);
-			
+
 			// repositories commands
 			} else if ( !empty($_REQUEST['repository_cmd']) && !empty($_REQUEST['url']) ) {
 				switch ( $_REQUEST['repository_cmd'] ) {
-					case 'add' : 
+					case 'add' :
 						if ( !empty($_REQUEST['type']) )
 							$ret = $composer->repository_add($_REQUEST['type'], $_REQUEST['url']);
 						break;
-						
-					case 'remove' : 
+
+					case 'remove' :
 						$ret = $composer->repository_remove($_REQUEST['url']);
 						break;
 				}
-			
+
 			// user command (not supported by this library)
 			} else if ( !empty($_REQUEST['cmd']) ) {
 				$ret = $composer->command($_REQUEST['cmd']);

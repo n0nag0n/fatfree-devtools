@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
+
 use CLI;
 
 class Devtools_Controller {
-
 	public function beforeroute(\Base $fw) {
 		ob_end_clean();
 	}
@@ -58,5 +59,4 @@ class Devtools_Controller {
 		mkdir($temp_dir);
 		CLI::out('Temp Cache Cleared Successfully');
 	}
-
 }
