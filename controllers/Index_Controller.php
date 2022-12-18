@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace n0nag0n;
 
-class Root_Controller extends Base_Controller {
+class Index_Controller extends Base_Controller {
 
 	public function index(\Base $fw): void {
 		
