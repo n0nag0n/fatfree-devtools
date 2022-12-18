@@ -36,7 +36,7 @@
 						<a class="nav-link" href="/config-check">Config Check</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ @config.database_management ?: '/adminer/' }}" target="_blank">Adminer</a>
+						<a class="nav-link" href="{{ isset(@config.database_management) && @config.database_management ?: '/adminer/' }}" target="_blank">Database</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/manage-composer" target="_blank">Manage Composer</a>
