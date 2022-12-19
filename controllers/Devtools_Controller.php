@@ -23,7 +23,7 @@ class Devtools_Controller {
 			die('Please choose a valid port');
 		}
 
-		CLI::info("PHP Webserver Started for Fat-Free Dev Tools. Navigate to http://localhost:{$port} to view your project. Press Ctrl+C to stop it!");
+		CLI::info("PHP Webserver Started for Fat-Free DevTools. Navigate to http://localhost:{$port} to view your project. Press Ctrl+C to stop it!");
 		system('php -S localhost:'.$port.' -t '.$dir);
 	}
 
@@ -36,16 +36,16 @@ class Devtools_Controller {
 			die('Please choose a valid port');
 		}
 
-		CLI::info("PHP Webserver Started for Fat-Free Dev Tools. Navigate to http://localhost:{$port} to view your admin console for dev tools. Press Ctrl+C to stop it!");
+		CLI::info("PHP Webserver Started for Fat-Free DevTools.\nNavigate to http://localhost:{$port} to view the DevTools admin console.\n\nPress Ctrl+C to stop it!");
 		system('php -S localhost:'.$port.' -t '.$dir);
 	}
 
 	public function help(\Base $fw) {
-		CLI::out('Fat-Free Dev Tools v-'.DEVTOOLS_VERSION.' Basic Usage: fatfree-devtools [action] [--flags]');
+		CLI::out('Fat-Free DevTools v-'.DEVTOOLS_VERSION.' Basic Usage: fatfree-devtools [action] [--flags]');
 	}
 
 	public function version(\Base $fw) {
-		CLI::out('Fat-Free Dev Tools v-'.DEVTOOLS_VERSION);
+		CLI::out('Fat-Free DevTools v-'.DEVTOOLS_VERSION);
 	}
 
 	public function cacheClear(\Base $fw) {
