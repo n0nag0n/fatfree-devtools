@@ -1,13 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
 
 use CLI;
 
-
 class Controller_Controller extends Base_Controller {
-
 	public function indexAction(\Base $fw): void {
 		$controllers = $this->getControllers();
 		$this->renderHtml('controllers/index.htm', [ 'controllers' => $controllers ]);

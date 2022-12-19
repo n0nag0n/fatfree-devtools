@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
@@ -6,7 +7,6 @@ namespace n0nag0n;
 use CLI;
 
 class Model_Controller extends Base_Controller {
-
 	public function indexAction(\Base $fw): void {
 		$models = $this->getModels();
 		$this->renderHtml('models/index.htm', [ 'models' => $models ]);

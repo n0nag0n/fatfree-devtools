@@ -1,4 +1,5 @@
 <?php
+
 // local and global installation paths
 foreach([ __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php', getenv('HOME').'/.config/composer/vendor/autoload.php' ] as $path) {
 	if(file_exists($path)) {

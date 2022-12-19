@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
 
 abstract class Base_Controller {
-
 	protected $fw;
 
 	public function __construct(\Base $fw) {
@@ -31,5 +31,4 @@ abstract class Base_Controller {
 	public function hasBeenInited(): bool {
 		return file_exists($this->fw->PROJECT_CONFIG);
 	}
-
 }

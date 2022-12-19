@@ -1,7 +1,6 @@
 <?php
 
 class Date {
-
     public static function getCurrentTimestamp(string $time_zone = 'UTC', string $format = 'Y-m-d H:i:s'): string {
         return (new DateTime('now', new DateTimeZone($time_zone)))->format($format);
     }
@@ -22,7 +21,7 @@ class Date {
     public static function convertUtcDateToTimeZone(string $date, string $time_zone, string $format = 'd-M-Y', string $modify_string = ''): string {
         return self::convertUtcTimestampToTimeZone($date, $time_zone, $format, $modify_string);
 	}
-	
+
 	/**
 	 * Generates a key value array of time zone
 	 * https://stackoverflow.com/a/17355238/721019
@@ -70,5 +69,4 @@ class Date {
 
 		return $timezone_list;
 	}
-
 }

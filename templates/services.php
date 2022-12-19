@@ -5,7 +5,7 @@ $fw->set('DB', new \DB\Jig(PROJECT_DEVTOOLS_DATA_DIR, \DB\Jig::FORMAT_JSON ), 60
 </check><check if="{{ !empty(@cnf_mysql_name) }}">
 // Setup MySQL DB Connection
 $fw->set('DB', new DB\SQL(
-		'mysql:host='.$fw->get('mysql.host').';port='.$fw->get('mysql.port').';dbname='.$fw->get('mysql.database').';charset='.$fw->get('mysql.charset'), 
+		'mysql:host='.$fw->get('mysql.host').';port='.$fw->get('mysql.port').';dbname='.$fw->get('mysql.database').';charset='.$fw->get('mysql.charset'),
 		$fw->get('mysql.username'),
 		$fw->get('mysql.password',
 		[

@@ -10,7 +10,6 @@ foreach([ __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php' ] 
 
 define("DEVTOOLS_VERSION", '0.3.1');
 
-
 $fw = Base::instance();
 $fw->DEBUG = 3;
 $fw->HALT = false;
@@ -34,4 +33,5 @@ $fw->ONERROR = function(\Base $fw) {
 		print_r($fw->ERROR);
 	}
 };
+
 $fw->run();
