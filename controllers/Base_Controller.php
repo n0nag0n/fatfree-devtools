@@ -9,13 +9,13 @@ abstract class Base_Controller {
 
 	public function __construct(\Base $fw) {
 		$this->fw = $fw;
-		$has_been_initted = $this->hasBeenInitted();
-		if($this->hasBeenInitted() === false && strpos($this->fw->URI, '/init-environment') === false) {
+		$has_been_inited = $this->hasBeenInited();
+		if($this->hasBeenInited() === false && strpos($this->fw->URI, '/init-environment') === false) {
 			$this->fw->reroute('/init-environment', false);
 		}
 
-		$this->fw->set('has_been_initted', $has_been_initted);
-		if($has_been_initted) {
+		$this->fw->set('has_been_inited', $has_been_inited);
+		if($has_been_inited) {
 			$project_config = new Project_Config($fw->DB);
 			$project_config->load();
 			$this->fw->set('project_config', $project_config);
@@ -28,8 +28,8 @@ abstract class Base_Controller {
 		echo \Template::instance()->render('layout.htm');
 	}
 
-	public function hasBeenInitted(): bool {
+	public function hasBeenInited(): bool {
 		return file_exists($this->fw->PROJECT_CONFIG);
 	}
-	
+
 }
