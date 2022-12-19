@@ -15,9 +15,10 @@ $fw->DEBUG = 3;
 $fw->HALT = false;
 $fw->LOGGABLE = '403;500;503;';
 
-putenv("FATFREE_DEVTOOLS_PROJECT_BASE_DIR=".getcwd().'/');
+$base_dir = str_replace('\\', '/', getcwd()).'/'; // Reverse slashes on Windows
 
-$fw->PROJECT_BASE_DIR = getcwd().'/';
+putenv("FATFREE_DEVTOOLS_PROJECT_BASE_DIR=$base_dir");
+$fw->PROJECT_BASE_DIR = $base_dir;
 
 $fw->route('GET / [cli]', 'n0nag0n\Devtools_Controller->help');
 $fw->route('GET /help [cli]', 'n0nag0n\Devtools_Controller->help');
