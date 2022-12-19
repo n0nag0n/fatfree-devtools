@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
 
 class Plugin_Controller extends Base_Controller {
-
 	public function indexAction(\Base $fw): void {
 		$projects = [
 			'projects' => [
@@ -247,7 +247,7 @@ class Plugin_Controller extends Base_Controller {
 					],
 				],
 			],
-			'examples' => [ 
+			'examples' => [
 				[
 					'title' => 'CMS Demo',
 					'description' => 'This content management system is designed for instructional purposes and help you get started on the use of the Fat-Free Framework.',

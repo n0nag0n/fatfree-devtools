@@ -1,8 +1,9 @@
 <?php
+
 /*
  * The purpose of this file is to have one central file hold all the requirements
  * to build up this app (index.php, cli or unit-test for example all share the same
- * requirements) 
+ * requirements)
  */
 
 require(PROJECT_ROOT_DIR.'{{ @cnf_composer }}autoload.php');

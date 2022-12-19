@@ -8,7 +8,7 @@
 		<!-- Bootstrap core CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/main.css">
-		<link href="/css/prism.min.css" rel="stylesheet" />
+		<link href="/css/prism.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -18,7 +18,7 @@
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<check if="{{ @has_been_initted }}">
+			<check if="{{ @has_been_inited }}">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item {{ strpos(@URI, 'controllers') !== false ? 'active' : '' }}">
 						<a class="nav-link" href="/controllers">Controllers</a>
@@ -36,12 +36,12 @@
 						<a class="nav-link" href="/config-check">Config Check</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ @config.database_management ?: '/adminer/' }}" target="_blank">Adminer</a>
+						<a class="nav-link" href="{{ isset(@config.database_management) && @config.database_management ?: '/adminer/' }}" target="_blank">Database</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/manage-composer" target="_blank">Manage Composer</a>
 					</li>
-					<!--<li class="nav-item {{ strpos(@URI, 'controllers') !== false ? 'active' : '' }}">
+					<!-- <li class="nav-item {{ strpos(@URI, 'controllers') !== false ? 'active' : '' }}">
 						<a class="nav-link" href="/models">Models</a>
 					</li>
 						<li class="nav-item dropdown">

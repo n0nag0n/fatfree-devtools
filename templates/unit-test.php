@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 DEFINE("PROJECT_ROOT_DIR", __DIR__.'/../../');
 require(PROJECT_ROOT_DIR.'{{ @cnf_config }}bootstrap.php');
 
@@ -30,36 +31,36 @@ function formatTextColor($str, $color) {
 		case "green":
 			$return = "\033[0;32m{$str}\033[0m";
 			break;
-			
+
 		case "red":
 			$return = "\033[0;31m{$str}\033[0m";
 			break;
-			
+
 		case "yellow":
 			$return = "\033[1;33m{$str}\033[0m";
 			break;
-			
+
 		case "white":
 			$return = "\033[1;37m{$str}\033[0m";
 			break;
-			
+
 		case "orange":
 			$return = "\033[0;33m{$str}\033[0m";
 			break;
-			
+
 		case "blue":
 			$return = "\033[0;34m{$str}\033[0m";
 			break;
-			
+
 		case "gray":
 		case "grey":
 			$return = "\033[1;30m{$str}\033[0m";
 			break;
-			
+
 		default:
 			$return = $str;
 	}
-	
+
 	return $return;
 }
 
@@ -93,8 +94,8 @@ foreach ($test->results() as $result) {
 		$desc = ' - '.$result['text'];
 	}
 	$filename = basename(explode(':', $result['source'])[0]);
-    if($result['status']) {
-        echoLine(formatTextColor('Pass ('.$source_time_stamps[$filename].' seconds) - '.$result['source'].$desc, 'green'));
+	if($result['status']) {
+		echoLine(formatTextColor('Pass ('.$source_time_stamps[$filename].' seconds) - '.$result['source'].$desc, 'green'));
 	} else {
 		echoLine(formatTextColor('FAIL ('.$source_time_stamps[$filename].' seconds) - '.$result['source'].$desc, 'red'));
 	}

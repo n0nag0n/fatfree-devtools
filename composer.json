@@ -1,19 +1,19 @@
 {
-    "name": "n0nag0n/fatfree-devtools",
-    "description": "A set of tools for help in creating models, controllers, routes, etc.",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "n0nag0n",
-            "email": "n0nag0n@sky-9.com"
-        }
-    ],
-    "require": {
-        "bcosca/fatfree-core": "^3.7",
-        "ikkez/f3-flash": "^1.0",
-        "n0nag0n/fatfree-environment-check": "^0.1.0",
-        "net-tools/composer-interface": "^1.0"
+	"name": "n0nag0n/fatfree-devtools",
+	"description": "A set of tools for help in creating models, controllers, routes, etc.",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "n0nag0n",
+			"email": "n0nag0n@sky-9.com"
+		}
+	],
+	"require": {
+		"bcosca/fatfree-core": "^3.7",
+		"ikkez/f3-flash": "^1.0",
+		"n0nag0n/fatfree-environment-check": "^0.1.0",
+		"net-tools/composer-interface": "^1.0"
 	},
 	"autoload": {
 		"classmap" : [ "utils", "controllers", "models" ]

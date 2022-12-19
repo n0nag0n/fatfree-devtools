@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
 
 class Init_Environment_Controller extends Base_Controller {
-
 	public function indexAction(\Base $fw): void {
 		$this->renderHtml('init_environment/index.htm', [ 'PAGE_TITLE' => 'Initialize Environment' ]);
 	}
@@ -13,37 +13,47 @@ class Init_Environment_Controller extends Base_Controller {
 
 		$page = $args['page'];
 		$page_ui = '';
+		$page_title = '';
+
 		switch($page) {
 			case 'title':
 				$page_ui = 'init_environment/title.htm';
+				$page_title = 'Title';
 			break;
 
 			case 'directory-setup':
 				$page_ui = 'init_environment/directory_setup.htm';
+				$page_title = 'Directory Setup';
 			break;
 
 			case 'basic-config':
 				$page_ui = 'init_environment/basic_config.htm';
+				$page_title = 'Basic Config';
 			break;
 
 			case 'choose-database':
 				$page_ui = 'init_environment/choose_database.htm';
+				$page_title = 'Choose Database';
 			break;
 
 			case 'jig':
 				$page_ui = 'init_environment/jig.htm';
+				$page_title = 'Jig';
 			break;
 
 			case 'sqlite':
 				$page_ui = 'init_environment/sqlite.htm';
+				$page_title = 'SQLite';
 			break;
 
 			case 'mysql':
 				$page_ui = 'init_environment/mysql.htm';
+				$page_title = 'MySQL';
 			break;
 
 			case 'security':
 				$page_ui = 'init_environment/security.htm';
+				$page_title = 'Security';
 			break;
 
 			default:
@@ -54,7 +64,7 @@ class Init_Environment_Controller extends Base_Controller {
 		$project_config = new Project_Config($fw->DB);
 		$project_config->load();
 
-		$this->renderHtml($page_ui, [ 'config' => $project_config, 'PAGE_TITLE' => $page.' - Configure Environment' ] );
+		$this->renderHtml($page_ui, [ 'config' => $project_config, 'PAGE_TITLE' => $page_title.' - Configure Environment' ] );
 	}
 
 	public function update(\Base $fw): void {
@@ -143,7 +153,7 @@ class Init_Environment_Controller extends Base_Controller {
 		if(!empty($relative_path) && !file_exists($file_path)) {
 			$contents = $this->fw->read(__DIR__.'/../templates/'.$template_file_path);
 			$contents = str_replace('<?php', '<test-php', $contents);
-			
+
 			$parsed_contents = \Template::instance()->parse($contents);
 			$contents = \Template::instance()->build($parsed_contents);
 			$contents = \Template::instance()->resolve($contents);

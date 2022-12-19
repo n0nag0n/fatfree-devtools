@@ -1,14 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 /**
  * This is an example base controller to help establish a foundation. You can use this
  * to create other base controllers (especially for the before/afterroute events).
  * This is likely where you will put code to authenticate the user if they can
- * view the route they are intending. 
+ * view the route they are intending.
  */
 abstract class Base_Controller {
-
 	/**
 	 * This will be called before a route is executed. Return false to deny the request
 	 *

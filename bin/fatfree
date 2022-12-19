@@ -8,17 +8,17 @@ foreach([ __DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php' ] 
 	}
 }
 
-define("DEVTOOLS_VERSION", '0.1.2');
-
+define("DEVTOOLS_VERSION", '0.3.1');
 
 $fw = Base::instance();
 $fw->DEBUG = 3;
 $fw->HALT = false;
 $fw->LOGGABLE = '403;500;503;';
 
-putenv("FATFREE_DEVTOOLS_PROJECT_BASE_DIR=".getcwd().'/');
+$base_dir = str_replace('\\', '/', getcwd()).'/'; // Reverse slashes on Windows
 
-$fw->PROJECT_BASE_DIR = getcwd().'/';
+putenv("FATFREE_DEVTOOLS_PROJECT_BASE_DIR=$base_dir");
+$fw->PROJECT_BASE_DIR = $base_dir;
 
 $fw->route('GET / [cli]', 'n0nag0n\Devtools_Controller->help');
 $fw->route('GET /help [cli]', 'n0nag0n\Devtools_Controller->help');
@@ -34,4 +34,5 @@ $fw->ONERROR = function(\Base $fw) {
 		print_r($fw->ERROR);
 	}
 };
+
 $fw->run();

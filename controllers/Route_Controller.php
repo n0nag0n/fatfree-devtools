@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace n0nag0n;
@@ -6,7 +7,6 @@ namespace n0nag0n;
 use CLI;
 
 class Route_Controller extends Base_Controller {
-
 	protected $routes_file_path;
 
 	public function __construct(\Base $fw) {
