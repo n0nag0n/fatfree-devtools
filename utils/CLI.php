@@ -177,7 +177,7 @@
                 $optionStr = '';
                 foreach ($options as $index => $opt) 
                     $optionStr .= $opt . (((count($options) - 1) == $index) ? '' : ',');
-                $prompt = (empty($msg) ? '' : "$msg ") . self::color("[${optionStr},q] ", CLI_WHITE);
+                $prompt = (empty($msg) ? '' : "$msg ") . self::color("[{$optionStr},q] ", CLI_WHITE);
             }
             $prompt .= ': ';
             // Loop until the user gives a valid answer or quits
