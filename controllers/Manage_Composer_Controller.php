@@ -8,9 +8,14 @@ use stdClass;
 
 class Manage_Composer_Controller extends Base_Controller {
 	public function indexAction(\Base $fw): void {
-		foreach([ __DIR__.'/../vendor/', getenv('HOME').'/.config/composer/vendor/' ] as $dir_path) {
+		foreach([ 
+			__DIR__.'/../vendor/', // if running this project only locally as if you forked this project
+			__DIR__.'/../../../', // if finding this from within a project
+			getenv('HOME').'/.config/composer/vendor/', // if composer installed globally,
+			
+		] as $dir_path) {
 			$final_path = $dir_path.'net-tools/composer-interface/src/autoload.php';
-			if(file_exists($final_path)) {
+			if(file_exists($final_path) === true) {
 				require($final_path);
 				break;
 			}
@@ -29,6 +34,7 @@ class Manage_Composer_Controller extends Base_Controller {
 				'/usr/bin/',
 				'~/',
 				$fw->PROJECT_BASE_DIR,
+				'.'
 			];
 			$composer_bin_location = '';
 			foreach([ 'composer', 'composer.phar' ] as $composer_app_name) {

@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace n0nag0n;
 
 class Init_Environment_Controller extends Base_Controller {
+
+	/** @var array Holds the hive temporarily for sandboxing */
+	protected array $temp;
+
 	public function indexAction(\Base $fw): void {
 		$this->renderHtml('init_environment/index.htm', [ 'PAGE_TITLE' => 'Initialize Environment' ]);
 	}
@@ -182,7 +186,7 @@ class Init_Environment_Controller extends Base_Controller {
 		if(!file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
 			$controller_filename = basename($this->fw->PROJECT_BASE_DIR.$relative_path);
 			$controller_name = explode('.', $controller_filename)[0];
-			$contents = $this->fw->read(__DIR__.'/../../templates/Controller.php');
+			$contents = $this->fw->read(__DIR__.'/../templates/Controller.php');
 			$contents = str_replace([ '<?php', '#controller_name#' ], [ '#?php', $controller_name ], $contents);
 			$contents = \Template::instance()->resolve($contents);
 			$this->fw->write($this->fw->PROJECT_BASE_DIR.$relative_path, str_replace('#?php', '<?php', $contents));

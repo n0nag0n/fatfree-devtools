@@ -59,7 +59,7 @@ Otherwise, globally installations can just type `fatfree`. Make sure to place th
 There is a web interface that can be used instead of usage through CLI. It is recommended to use the web interface for beginners. To start up the web interface run the following command.
 
 ```shell
-fatfree serve admin
+fatfree serve admin [--help [--port-8081 [--host=localhost]]]
 ```
 
 Then follow the instructions output in your console for where to navigate to in your browser for the DevTools to display.
@@ -77,7 +77,7 @@ This is a list of commands currently being used in the devtools helper.
 This will serve your project using the PHP built-in web server.
 
 ```shell
-fatfree serve
+fatfree serve [--help [--port-8080 [--host=localhost]]]
 ```
 
 
