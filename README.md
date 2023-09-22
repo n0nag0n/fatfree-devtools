@@ -2,6 +2,8 @@
 
 This is a package that can aid the creation and management of your Fat-Free projects.
 
+**Note: This is not tested against Windows environments for the time being.**
+
 
 
 
