@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bcosca/fatfree-core",
-            "version": "3.8.1",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/f3-factory/fatfree-core.git",
-                "reference": "f6ea45472f55a1ecabd4ced74cb56f0efd6af34e"
+                "reference": "774692ce7698904d3cb35bbd4f79376bb17eeddc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/f3-factory/fatfree-core/zipball/f6ea45472f55a1ecabd4ced74cb56f0efd6af34e",
-                "reference": "f6ea45472f55a1ecabd4ced74cb56f0efd6af34e",
+                "url": "https://api.github.com/repos/f3-factory/fatfree-core/zipball/774692ce7698904d3cb35bbd4f79376bb17eeddc",
+                "reference": "774692ce7698904d3cb35bbd4f79376bb17eeddc",
                 "shasum": ""
             },
             "require": {
@@ -37,9 +37,9 @@
             "homepage": "http://fatfreeframework.com/",
             "support": {
                 "issues": "https://github.com/f3-factory/fatfree-core/issues",
-                "source": "https://github.com/f3-factory/fatfree-core/tree/3.8.1"
+                "source": "https://github.com/f3-factory/fatfree-core/tree/3.8.2"
             },
-            "time": "2022-11-04T23:15:19+00:00"
+            "time": "2023-07-23T22:11:30+00:00"
         },
         {
             "name": "ikkez/f3-flash",
@@ -121,16 +121,16 @@
         },
         {
             "name": "net-tools/composer-interface",
-            "version": "1.0.15",
+            "version": "1.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/net-tools/composer-interface.git",
-                "reference": "079964b37399851763efbd3571205388829fd355"
+                "reference": "1640d38b4fff3ff31a53d49826381e25a148e6cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/net-tools/composer-interface/zipball/079964b37399851763efbd3571205388829fd355",
-                "reference": "079964b37399851763efbd3571205388829fd355",
+                "url": "https://api.github.com/repos/net-tools/composer-interface/zipball/1640d38b4fff3ff31a53d49826381e25a148e6cc",
+                "reference": "1640d38b4fff3ff31a53d49826381e25a148e6cc",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "description": "PHP shell interface to Composer when SSH is not available on your host ",
             "support": {
                 "issues": "https://github.com/net-tools/composer-interface/issues",
-                "source": "https://github.com/net-tools/composer-interface/tree/1.0.15"
+                "source": "https://github.com/net-tools/composer-interface/tree/1.0.16"
             },
-            "time": "2022-03-08T16:48:51+00:00"
+            "time": "2023-09-10T12:43:37+00:00"
         }
     ],
     "packages-dev": [],

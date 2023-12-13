@@ -10,7 +10,7 @@ class Init_Environment_Controller extends Base_Controller {
 	protected array $temp;
 
 	public function indexAction(\Base $fw): void {
-		$this->renderHtml('init_environment/index.htm', [ 'PAGE_TITLE' => 'Initialize Environment' ]);
+		$this->renderHtml('init_environment'.DIRECTORY_SEPARATOR.'index.htm', [ 'PAGE_TITLE' => 'Initialize Environment' ]);
 	}
 
 	public function pageAction(\Base $fw, array $args = []): void {
@@ -21,42 +21,42 @@ class Init_Environment_Controller extends Base_Controller {
 
 		switch($page) {
 			case 'title':
-				$page_ui = 'init_environment/title.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'title.htm';
 				$page_title = 'Title';
 			break;
 
 			case 'directory-setup':
-				$page_ui = 'init_environment/directory_setup.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'directory_setup.htm';
 				$page_title = 'Directory Setup';
 			break;
 
 			case 'basic-config':
-				$page_ui = 'init_environment/basic_config.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'basic_config.htm';
 				$page_title = 'Basic Config';
 			break;
 
 			case 'choose-database':
-				$page_ui = 'init_environment/choose_database.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'choose_database.htm';
 				$page_title = 'Choose Database';
 			break;
 
 			case 'jig':
-				$page_ui = 'init_environment/jig.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'jig.htm';
 				$page_title = 'Jig';
 			break;
 
 			case 'sqlite':
-				$page_ui = 'init_environment/sqlite.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'sqlite.htm';
 				$page_title = 'SQLite';
 			break;
 
 			case 'mysql':
-				$page_ui = 'init_environment/mysql.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'mysql.htm';
 				$page_title = 'MySQL';
 			break;
 
 			case 'security':
-				$page_ui = 'init_environment/security.htm';
+				$page_ui = 'init_environment'.DIRECTORY_SEPARATOR.'security.htm';
 				$page_title = 'Security';
 			break;
 
@@ -155,7 +155,7 @@ class Init_Environment_Controller extends Base_Controller {
 	protected function createProjectFile(string $relative_path, string $template_file_path): bool {
 		$file_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
 		if(!empty($relative_path) && !file_exists($file_path)) {
-			$contents = $this->fw->read(__DIR__.'/../templates/'.$template_file_path);
+			$contents = $this->fw->read(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template_file_path);
 			$contents = str_replace('<?php', '<test-php', $contents);
 
 			$parsed_contents = \Template::instance()->parse($contents);
@@ -186,7 +186,7 @@ class Init_Environment_Controller extends Base_Controller {
 		if(!file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
 			$controller_filename = basename($this->fw->PROJECT_BASE_DIR.$relative_path);
 			$controller_name = explode('.', $controller_filename)[0];
-			$contents = $this->fw->read(__DIR__.'/../templates/Controller.php');
+			$contents = $this->fw->read(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'Controller.php');
 			$contents = str_replace([ '<?php', '#controller_name#' ], [ '#?php', $controller_name ], $contents);
 			$contents = \Template::instance()->resolve($contents);
 			$this->fw->write($this->fw->PROJECT_BASE_DIR.$relative_path, str_replace('#?php', '<?php', $contents));

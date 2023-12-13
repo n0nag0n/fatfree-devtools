@@ -16,7 +16,7 @@ class Route_Controller extends Base_Controller {
 
 	public function indexAction(\Base $fw): void {
 		$routes = $this->getRoutes();
-		$this->renderHtml('routes/index.htm', [ 'routes' => $routes ]);
+		$this->renderHtml('routes'.DIRECTORY_SEPARATOR.'index.htm', [ 'routes' => $routes ]);
 	}
 
 	public function addAction(\Base $fw): void {
@@ -25,7 +25,7 @@ class Route_Controller extends Base_Controller {
 		foreach($controllers as &$controller) {
 			$controller['endpoints'] = $Controller_Controller->getControllerEndpointMethods($controller['base_name']);
 		}
-		$this->renderHtml('routes/add.htm', [
+		$this->renderHtml('routes'.DIRECTORY_SEPARATOR.'add.htm', [
 			'controllers' => $controllers
 		]);
 	}

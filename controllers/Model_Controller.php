@@ -9,11 +9,11 @@ use CLI;
 class Model_Controller extends Base_Controller {
 	public function indexAction(\Base $fw): void {
 		$models = $this->getModels();
-		$this->renderHtml('models/index.htm', [ 'models' => $models ]);
+		$this->renderHtml('models'.DIRECTORY_SEPARATOR.'index.htm', [ 'models' => $models ]);
 	}
 
 	public function addAction(\Base $fw): void {
-		$this->renderHtml('models/add.htm');
+		$this->renderHtml('models'.DIRECTORY_SEPARATOR.'add.htm');
 	}
 
 	public function create(\Base $fw, array $args = []): void {
@@ -54,7 +54,7 @@ class Model_Controller extends Base_Controller {
 			throw new \Exception('The model already exists');
 		}
 
-		$contents = $this->fw->read(__DIR__.'/../templates/Model.php');
+		$contents = $this->fw->read(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'Model.php');
 		$contents = str_replace([ '<?php', '#model_name#', '#table_name#' ], [ '#?php', $purified_model_name, $table_name ], $contents);
 		$contents = \Template::instance()->resolve($contents);
 		$write_result = $this->fw->write($full_path, str_replace('#?php', '<?php', $contents));

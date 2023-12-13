@@ -64,7 +64,7 @@ class Devtools_Controller {
 	}
 
 	public function cacheClear(\Base $fw) {
-		$fw->config(__DIR__.'/../config/webtools_config.ini', true);
+		$fw->config(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'webtools_config.ini', true);
 		$fw->set('DB', new \DB\Jig($fw->PROJECT_DATA_DIR, \DB\Jig::FORMAT_JSON ));
 
 		$Project_Config = new Project_Config($fw->DB);

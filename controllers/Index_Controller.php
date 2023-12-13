@@ -13,7 +13,7 @@ class Index_Controller extends Base_Controller {
 			$fw->reroute('/init-environment');
 		}
 
-		$this->renderHtml('index/index.htm');
+		$this->renderHtml('index'.DIRECTORY_SEPARATOR.'index.htm');
 	}
 
 }

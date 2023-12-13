@@ -343,7 +343,7 @@ class Plugin_Controller extends Base_Controller {
 			],
 		];
 		ksort($projects['projects']);
-		$this->renderHtml('plugins/index.htm', $projects);
+		$this->renderHtml('plugins'.DIRECTORY_SEPARATOR.'index.htm', $projects);
 	}
 
 	public static function hasPackageInstalled(string $package_name): bool {

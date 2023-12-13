@@ -9,19 +9,19 @@ use stdClass;
 class Manage_Composer_Controller extends Base_Controller {
 	public function indexAction(\Base $fw): void {
 		foreach([ 
-			__DIR__.'/../vendor/', // if running this project only locally as if you forked this project
-			__DIR__.'/../../../', // if finding this from within a project
-			getenv('HOME').'/.config/composer/vendor/', // if composer installed globally,
+			__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR, // if running this project only locally as if you forked this project
+			__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR, // if finding this from within a project
+			getenv('HOME').DIRECTORY_SEPARATOR.'.config'.DIRECTORY_SEPARATOR.'composer'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR, // if composer installed globally,
 			
 		] as $dir_path) {
-			$final_path = $dir_path.'net-tools/composer-interface/src/autoload.php';
+			$final_path = $dir_path.'net-tools'.DIRECTORY_SEPARATOR.'composer-interface'.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'autoload.php';
 			if(file_exists($final_path) === true) {
 				require($final_path);
 				break;
 			}
 		}
 
-		$root = rtrim($fw->PROJECT_BASE_DIR, '/');
+		$root = rtrim($fw->PROJECT_BASE_DIR, DIRECTORY_SEPARATOR);
 		$ret = '';
 		try
 		{
@@ -34,7 +34,8 @@ class Manage_Composer_Controller extends Base_Controller {
 				'/usr/bin/',
 				'~/',
 				$fw->PROJECT_BASE_DIR,
-				'.'
+				'.',
+				'C:\ProgramData\ComposerSetup\bin'
 			];
 			$composer_bin_location = '';
 			foreach([ 'composer', 'composer.phar' ] as $composer_app_name) {
@@ -84,8 +85,8 @@ class Manage_Composer_Controller extends Base_Controller {
 
 		error_reporting(E_ALL);
 
-		if(file_exists($root . '/composer.json')) {
-			$composer_file_contents = file_get_contents($root . '/composer.json');
+		if(file_exists($root . DIRECTORY_SEPARATOR . 'composer.json')) {
+			$composer_file_contents = file_get_contents($root . DIRECTORY_SEPARATOR . 'composer.json');
 		} else {
 			$composer_file_contents = "No composer.json file detected; you MUST install composer by hitting the SETUP link below.>";
 		}
@@ -94,9 +95,9 @@ class Manage_Composer_Controller extends Base_Controller {
 		$params = [
 			'command_return' => $ret,
 			'composer_file_contents' => $composer_file_contents,
-			'composer_file_path' => $root.'/composer.json'
+			'composer_file_path' => $root.DIRECTORY_SEPARATOR.'composer.json'
 		];
 
-		$this->renderHtml('manage_composer/index.htm', $params);
+		$this->renderHtml('manage_composer'.DIRECTORY_SEPARATOR.'index.htm', $params);
 	}
 }

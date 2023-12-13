@@ -11,7 +11,7 @@ class ComposerInterfaceAdapter extends \Nettools\ComposerInterface\ComposerInter
 		// path to php binary
 		$phpbin = $this->_config->composer_phpbin;
 
-		// path to composer home ; will be set in the shell environment. We recommand defining a home value
+		// path to composer home ; will be set in the shell environment. We recommend defining a home value
 		// in the parent folder of the project, allowing sharing data between projects
 		if ( $this->_config->composer_home ) {
 			$home = $this->_config->composer_home;

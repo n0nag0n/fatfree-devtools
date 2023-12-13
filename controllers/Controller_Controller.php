@@ -9,11 +9,11 @@ use CLI;
 class Controller_Controller extends Base_Controller {
 	public function indexAction(\Base $fw): void {
 		$controllers = $this->getControllers();
-		$this->renderHtml('controllers/index.htm', [ 'controllers' => $controllers ]);
+		$this->renderHtml('controllers'.DIRECTORY_SEPARATOR.'index.htm', [ 'controllers' => $controllers ]);
 	}
 
 	public function addAction(\Base $fw): void {
-		$this->renderHtml('controllers/add.htm');
+		$this->renderHtml('controllers'.DIRECTORY_SEPARATOR.'add.htm');
 	}
 
 	public function create(\Base $fw, array $args = []): void {
@@ -50,7 +50,7 @@ class Controller_Controller extends Base_Controller {
 
 		$methods = $this->getControllerMethods($controller);
 		$methods = $this->getControllerEndpointMethods($controller);
-		$this->renderHtml('controllers/details.htm', [
+		$this->renderHtml('controllers'.DIRECTORY_SEPARATOR.'details.htm', [
 			'controller_name' => $controller,
 			'methods' => $methods
 		]);
@@ -58,7 +58,7 @@ class Controller_Controller extends Base_Controller {
 
 	public function addEndpointAction(\Base $fw, array $args = []): void {
 		$controller = $args['controller'];
-		$this->renderHtml('controllers/add_endpoint.htm', [
+		$this->renderHtml('controllers'.DIRECTORY_SEPARATOR.'add_endpoint.htm', [
 			'controller_name' => $controller
 		]);
 	}
@@ -115,7 +115,7 @@ class Controller_Controller extends Base_Controller {
 			throw new \Exception('The controller already exists');
 		}
 
-		$contents = $this->fw->read(__DIR__.'/../templates/Controller.php');
+		$contents = $this->fw->read(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'Controller.php');
 		$contents = str_replace([ '<?php', '#controller_name#' ], [ '#?php', $purified_controller_name ], $contents);
 		$contents = \Template::instance()->resolve($contents);
 		$write_result = $this->fw->write($full_path, str_replace('#?php', '<?php', $contents));
