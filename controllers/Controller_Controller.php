@@ -45,10 +45,7 @@ class Controller_Controller extends Base_Controller {
 	}
 
 	public function detailsAction(\Base $fw, array $args = []): void {
-
-		$controller = $args['controller'];
-
-		$methods = $this->getControllerMethods($controller);
+		$controller = $this->resolveControllerName($args['controller'] ?? '');
 		$methods = $this->getControllerEndpointMethods($controller);
 		$this->renderHtml('controllers'.DIRECTORY_SEPARATOR.'details.htm', [
 			'controller_name' => $controller,
@@ -57,7 +54,7 @@ class Controller_Controller extends Base_Controller {
 	}
 
 	public function addEndpointAction(\Base $fw, array $args = []): void {
-		$controller = $args['controller'];
+		$controller = $this->resolveControllerName($args['controller'] ?? '');
 		$this->renderHtml('controllers'.DIRECTORY_SEPARATOR.'add_endpoint.htm', [
 			'controller_name' => $controller
 		]);
@@ -78,13 +75,14 @@ class Controller_Controller extends Base_Controller {
 		}
 
 		$result = $this->addEndpointMethodToController($controller_name, $method_name);
+		$resolved_controller = $this->resolveControllerName($controller_name);
 		if($result === true) {
 			$message = 'Method successfully created';
 			if($this->fw->CLI) {
 				CLI::success($message);
 			} else {
 				$this->fw->flash->addMessage($message, 'success');
-				$this->fw->reroute('/controllers/details/'.$controller_name, false);
+				$this->fw->reroute('/controllers/details/'.$resolved_controller, false);
 			}
 		} else {
 			$message = 'Method failed to be created';
@@ -92,7 +90,7 @@ class Controller_Controller extends Base_Controller {
 				CLI::error($message);
 			} else {
 				$this->fw->flash->addMessage($message, 'danger');
-				$this->fw->reroute('/controllers/details/'.$controller_name.'/add-method', false);
+				$this->fw->reroute('/controllers/details/'.$resolved_controller.'/add-method', false);
 			}
 		}
 	}
@@ -107,10 +105,11 @@ class Controller_Controller extends Base_Controller {
 	}
 
 	public function createControllerFile(string $controller_name): bool {
+		$purified_controller_name = InputValidator::sanitizeIdentifierLoose($controller_name).'_Controller';
+		$relative_path = $this->fw->project_config->controller.$purified_controller_name.'.php';
+		InputValidator::assertPathUnderBase($this->fw->PROJECT_BASE_DIR, $relative_path);
 
-		$purified_controller_name = preg_replace("/\W/", '_', $controller_name).'_Controller';
-
-		$full_path = $this->fw->PROJECT_BASE_DIR.$this->fw->project_config->controller.$purified_controller_name.'.php';
+		$full_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
 		if(file_exists($full_path)) {
 			throw new \Exception('The controller already exists');
 		}
@@ -123,7 +122,12 @@ class Controller_Controller extends Base_Controller {
 	}
 
 	public function getControllerMethods(string $controller_name): array {
-		$arr = file($this->fw->PROJECT_BASE_DIR.$this->fw->project_config->controller.$controller_name.'.php');
+		$controller_name = $this->resolveControllerName($controller_name);
+		$file_path = $this->fw->PROJECT_BASE_DIR.$this->fw->project_config->controller.$controller_name.'.php';
+		if(!file_exists($file_path)) {
+			throw new \Exception('Controller not found');
+		}
+		$arr = file($file_path);
 		$arr_methods = [];
 		foreach($arr as $line) {
 			if (preg_match('/function ([_A-Za-z0-9]+)/i', $line, $regs)) {
@@ -142,9 +146,14 @@ class Controller_Controller extends Base_Controller {
 	}
 
 	public function addEndpointMethodToController(string $controller_name, string $method_name): bool {
-		$purified_controller_name = preg_replace("/\W/", '_', $controller_name);
-		$purified_method_name = preg_replace("/\W/", '_', $method_name);
-		$file_path = $this->fw->PROJECT_BASE_DIR.$this->fw->project_config->controller.$purified_controller_name.'.php';
+		$purified_controller_name = InputValidator::sanitizeIdentifierLoose($controller_name);
+		$purified_method_name = InputValidator::sanitizeIdentifierLoose($method_name);
+		$relative_path = $this->fw->project_config->controller.$purified_controller_name.'.php';
+		InputValidator::assertPathUnderBase($this->fw->PROJECT_BASE_DIR, $relative_path);
+		$file_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
+		if(!file_exists($file_path)) {
+			throw new \Exception('Controller not found');
+		}
 		$arr = file($file_path);
 		$new_method_arr = [
 			"\n\tpublic function {$purified_method_name}Action(\\Base \$fw, array \$args = []): void {\n",
@@ -154,5 +163,10 @@ class Controller_Controller extends Base_Controller {
 		$arr = array_merge(array_slice($arr, 0, -1), $new_method_arr, array_slice($arr, -1));
 		$write_result = $this->fw->write($file_path, join('', $arr));
 		return is_int($write_result);
+	}
+
+	protected function resolveControllerName(string $controller_name): string {
+		$controller_name = str_replace('.php', '', $controller_name);
+		return InputValidator::sanitizeIdentifierLoose($controller_name);
 	}
 }

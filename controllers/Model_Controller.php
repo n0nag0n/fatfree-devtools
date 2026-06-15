@@ -46,16 +46,23 @@ class Model_Controller extends Base_Controller {
 	}
 
 	public function createModelFile(string $model_name, string $table_name): bool {
+		$purified_model_name = InputValidator::sanitizeIdentifierLoose($model_name);
+		if(trim($table_name) === '') {
+			$purified_table_name = $purified_model_name;
+		} else {
+			$purified_table_name = InputValidator::sanitizeIdentifierLoose($table_name);
+		}
 
-		$purified_model_name = preg_replace("/\W/", '_', $model_name);
+		$relative_path = $this->fw->project_config->model.$purified_model_name.'.php';
+		InputValidator::assertPathUnderBase($this->fw->PROJECT_BASE_DIR, $relative_path);
 
-		$full_path = $this->fw->PROJECT_BASE_DIR.$this->fw->project_config->model.$purified_model_name.'.php';
+		$full_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
 		if(file_exists($full_path)) {
 			throw new \Exception('The model already exists');
 		}
 
 		$contents = $this->fw->read(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'Model.php');
-		$contents = str_replace([ '<?php', '#model_name#', '#table_name#' ], [ '#?php', $purified_model_name, $table_name ], $contents);
+		$contents = str_replace([ '<?php', '#model_name#', '#table_name#' ], [ '#?php', $purified_model_name, $purified_table_name ], $contents);
 		$contents = \Template::instance()->resolve($contents);
 		$write_result = $this->fw->write($full_path, str_replace('#?php', '<?php', $contents));
 		return is_int($write_result);
