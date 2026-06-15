@@ -13,7 +13,7 @@ class AdminerTablesHistory {
 
 	function tablesPrint($tables) {
 		?>
-<script <?=nonce();?>>
+<script type="text/javascript">
 
 	history_length = 5;
 
@@ -70,8 +70,8 @@ class AdminerTablesHistory {
 <p onmouseover="menuOver(this, event);" onmouseout="menuOut(this);" style="white-space:nowrap;overflow:auto;text-overflow:ellipsis;"><?php
   // print_r($_COOKIE['adminer_tables_history']);
 	foreach (array_reverse(json_decode($_COOKIE['adminer_tables_history'])) as $table) {
-		echo '<a href="' . h(ME) . 'select=' . urlencode($table) . '"' . bold($_GET["select"] == $table) . ">" . lang('select') . "</a>&nbsp;";
-		echo '<a href="' . h(ME) . 'table=' . urlencode($table) . '"' . bold($_GET["table"] == $table) . ">" . h($table) . "</a><br>\n";
+		echo '<a href="' . Adminer\h(Adminer\ME) . 'select=' . urlencode($table) . '"' . Adminer\bold($_GET["select"] == $table) . ">" . Adminer\lang('select') . "</a>&nbsp;";
+		echo '<a href="' . Adminer\h(Adminer\ME) . 'table=' . urlencode($table) . '"' . Adminer\bold($_GET["table"] == $table) . ">" . Adminer\h($table) . "</a><br>\n";
 	}
 ?></p>
 <?php endif; ?>
