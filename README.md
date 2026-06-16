@@ -4,6 +4,14 @@ This is a package that can aid the creation and management of your Fat-Free proj
 
 **Note: This is not tested against Windows environments for the time being.**
 
+## Security
+
+Fat-Free DevTools is a **local development tool only**. The web admin UI can create PHP files, modify routes, run Composer commands, and includes bundled Adminer for database access.
+
+- Only run `fatfree serve admin` on `localhost` or `127.0.0.1`
+- Never deploy the DevTools `public/` directory to a production server
+- Never expose the admin console to untrusted networks
+
 
 
 
@@ -23,7 +31,7 @@ I created a basic guide to help those that want to get started with this DevTool
 Installation is through Composer. If you don't have Composer, run the following command.
 
 ```
-curl -s http://getcomposer.org/installer | php
+curl -sS https://getcomposer.org/installer | php
 ```
 
 

@@ -8,11 +8,10 @@ use stdClass;
 
 class Manage_Composer_Controller extends Base_Controller {
 	public function indexAction(\Base $fw): void {
-		foreach([ 
-			__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR, // if running this project only locally as if you forked this project
-			__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR, // if finding this from within a project
-			getenv('HOME').DIRECTORY_SEPARATOR.'.config'.DIRECTORY_SEPARATOR.'composer'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR, // if composer installed globally,
-			
+		foreach([
+			__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR,
+			__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR,
+			getenv('HOME').DIRECTORY_SEPARATOR.'.config'.DIRECTORY_SEPARATOR.'composer'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR,
 		] as $dir_path) {
 			$final_path = $dir_path.'net-tools'.DIRECTORY_SEPARATOR.'composer-interface'.DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.'autoload.php';
 			if(file_exists($final_path) === true) {
@@ -25,7 +24,6 @@ class Manage_Composer_Controller extends Base_Controller {
 		$ret = '';
 		try
 		{
-			// create config object and set composer home (here, the parent folder of document root, so that other composer projects may benefit from global caching)
 			$raw_config = new stdClass;
 			$raw_config->composer_phpbin = PHP_BINARY;
 			$config = new \Nettools\ComposerInterface\Config($raw_config);
@@ -48,39 +46,60 @@ class Manage_Composer_Controller extends Base_Controller {
 			}
 			$config->composer_bin_location = $composer_bin_location;
 
-			// create interface and set the composer project to be in folder PROJECT
 			$composer = new \ComposerInterfaceAdapter($config, $root);
 
 			error_reporting(0);
-			// global commands (not relative to a package or repository)
 			if ( !empty($_REQUEST['composer']) ) {
-				$ret = $composer->{$_REQUEST['composer']}();
+				$action = InputValidator::assertAllowlisted(
+					(string)$_REQUEST['composer'],
+					InputValidator::COMPOSER_ACTIONS,
+					'composer action'
+				);
+				$ret = $composer->{$action}();
 			}
-
-			// package commands
 			else if ( !empty($_REQUEST['package_cmd']) && !empty($_REQUEST['package']) ) {
-				$ret = $composer->{'package_' . $_REQUEST['package_cmd']}($_REQUEST['package']);
-
-			// repositories commands
-			} else if ( !empty($_REQUEST['repository_cmd']) && !empty($_REQUEST['url']) ) {
-				switch ( $_REQUEST['repository_cmd'] ) {
+				$package_cmd = InputValidator::assertAllowlisted(
+					(string)$_REQUEST['package_cmd'],
+					InputValidator::PACKAGE_COMMANDS,
+					'package command'
+				);
+				$package = InputValidator::validatePackageName((string)$_REQUEST['package']);
+				$ret = $composer->{'package_'.$package_cmd}($package);
+			}
+			else if ( !empty($_REQUEST['repository_cmd']) && !empty($_REQUEST['url']) ) {
+				$repository_cmd = InputValidator::assertAllowlisted(
+					(string)$_REQUEST['repository_cmd'],
+					InputValidator::REPOSITORY_COMMANDS,
+					'repository command'
+				);
+				$url = InputValidator::validateUrl((string)$_REQUEST['url']);
+				switch ( $repository_cmd ) {
 					case 'add' :
-						if ( !empty($_REQUEST['type']) )
-							$ret = $composer->repository_add($_REQUEST['type'], $_REQUEST['url']);
+						if ( !empty($_REQUEST['type']) ) {
+							$type = InputValidator::assertAllowlisted(
+								(string)$_REQUEST['type'],
+								InputValidator::REPOSITORY_TYPES,
+								'repository type'
+							);
+							$ret = $composer->repository_add($type, $url);
+						}
 						break;
 
 					case 'remove' :
-						$ret = $composer->repository_remove($_REQUEST['url']);
+						$ret = $composer->repository_remove($url);
 						break;
 				}
-
-			// user command (not supported by this library)
-			} else if ( !empty($_REQUEST['cmd']) ) {
-				$ret = $composer->command($_REQUEST['cmd']);
+			}
+			else if ( !empty($_REQUEST['cmd']) ) {
+				$ret = $composer->command((string)$_REQUEST['cmd']);
 			}
 		}
 		catch(\Throwable $e) {
-			$ret = $e->getMessage() . "\n---\nTrace : " . $e->getTraceAsString();
+			if($fw->CLI) {
+				$ret = $e->getMessage() . "\n---\nTrace : " . $e->getTraceAsString();
+			} else {
+				$ret = $e->getMessage();
+			}
 		}
 
 		error_reporting(E_ALL);
@@ -90,7 +109,6 @@ class Manage_Composer_Controller extends Base_Controller {
 		} else {
 			$composer_file_contents = "No composer.json file detected; you MUST install composer by hitting the SETUP link below.>";
 		}
-
 
 		$params = [
 			'command_return' => $ret,

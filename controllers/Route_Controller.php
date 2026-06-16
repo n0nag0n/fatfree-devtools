@@ -35,9 +35,9 @@ class Route_Controller extends Base_Controller {
 		$methods = $post['methods'];
 		$type = $post['type'];
 		$path = $post['path'];
-		$namespace = $post['namespace'] ?: '';
+		$namespace = InputValidator::validateNamespace($post['namespace'] ?: '');
 		$alias = $post['alias'] ? '@'.$post['alias'].': ' : '';
-		$controller_endpoint = $post['controller_endpoint'];
+		$controller_endpoint = InputValidator::validateControllerEndpoint($post['controller_endpoint']);
 
 		if(empty($methods)) {
 			$this->fw->flash->addMessage('You must select at least one method before proceeding.', 'danger');

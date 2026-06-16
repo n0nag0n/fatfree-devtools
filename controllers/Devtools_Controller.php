@@ -30,8 +30,19 @@ class Devtools_Controller {
 			die('Please choose a valid port');
 		}
 
+		if($dir === false) {
+			die('Public directory not found');
+		}
+
+		try {
+			$host = InputValidator::validateHost((string)$host);
+		} catch(\InvalidArgumentException $e) {
+			die('Please choose a valid host');
+		}
+
+		$command = 'php -S '.escapeshellarg($host.':'.$port).' -t '.escapeshellarg($dir);
 		CLI::info("PHP Webserver Started for Fat-Free DevTools. Navigate to http://{$host}:{$port} to view your project. Press Ctrl+C to stop it!");
-		system('php -S '.$host.':'.$port.' -t '.$dir);
+		system($command);
 	}
 
 	public function adminServe(\Base $fw, array $args = []): void {
@@ -51,8 +62,19 @@ class Devtools_Controller {
 			die('Please choose a valid port');
 		}
 
+		if($dir === false) {
+			die('Public directory not found');
+		}
+
+		try {
+			$host = InputValidator::validateHost((string)$host);
+		} catch(\InvalidArgumentException $e) {
+			die('Please choose a valid host');
+		}
+
+		$command = 'php -S '.escapeshellarg($host.':'.$port).' -t '.escapeshellarg($dir);
 		CLI::info("PHP Webserver Started for Fat-Free DevTools.\nNavigate to http://{$host}:{$port} to view the DevTools admin console.\n\nPress Ctrl+C to stop it!");
-		system('php -S '.$host.':'.$port.' -t '.$dir);
+		system($command);
 	}
 
 	public function help(\Base $fw) {

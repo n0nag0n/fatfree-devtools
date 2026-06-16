@@ -9,6 +9,13 @@ class Init_Environment_Controller extends Base_Controller {
 	/** @var array Holds the hive temporarily for sandboxing */
 	protected array $temp;
 
+	/** @var string[] */
+	private const PATH_FIELDS = [
+		'config', 'controller', 'task', 'model', 'ui', 'tests', 'public', 'bin',
+		'utils', 'log', 'uploads', 'temp', 'composer', 'sqlite', 'jig',
+		'general_config', 'routes', 'cli_routes', 'services',
+	];
+
 	public function indexAction(\Base $fw): void {
 		$this->renderHtml('init_environment'.DIRECTORY_SEPARATOR.'index.htm', [ 'PAGE_TITLE' => 'Initialize Environment' ]);
 	}
@@ -79,15 +86,24 @@ class Init_Environment_Controller extends Base_Controller {
 			mkdir($fw->PROJECT_DATA_DIR, 0775);
 		}
 
+		foreach(self::PATH_FIELDS as $field) {
+			if(isset($post[$field]) && $post[$field] !== '') {
+				$post[$field] = InputValidator::validateRelativePath((string)$post[$field]);
+			}
+		}
+
+		if(!empty($post['database_management'])) {
+			$post['database_management'] = $this->validateDatabaseManagementPath((string)$post['database_management']);
+		}
+
 		$project_config = new Project_Config($fw->DB);
 		$project_config->load();
 		$project_config->copyfrom($post);
 		$project_config->save();
 
-		//$fw->flash->addMessage('Settings Updated Successfully', 'success');
-
-		if($post['next_page']) {
-			$fw->reroute('/init-environment/'.$post['next_page'], false);
+		if(!empty($post['next_page'])) {
+			$next_page = InputValidator::assertInitEnvironmentPage((string)$post['next_page']);
+			$fw->reroute('/init-environment/'.$next_page, false);
 		}
 	}
 
@@ -96,10 +112,16 @@ class Init_Environment_Controller extends Base_Controller {
 		$project_config = new Project_Config($fw->DB);
 		$project_config->load();
 		$config = $project_config->cast();
+
+		foreach(self::PATH_FIELDS as $field) {
+			if(!empty($config[$field])) {
+				$config[$field] = InputValidator::validateRelativePath((string)$config[$field]);
+			}
+		}
+
 		$fw->mset($config, 'cnf_');
 		$fw->set('project_config', $project_config);
 
-		// start creating directories
 		$this->createProjectDir($config['config']);
 		$this->createProjectDir($config['controller']);
 		$this->createProjectDir($config['model']);
@@ -117,7 +139,6 @@ class Init_Environment_Controller extends Base_Controller {
 			$this->createProjectDir(dirname($config['sqlite']));
 		}
 
-		// create some template files
 		$this->createProjectFile($config['public'].'index.php', 'index.php');
 		$this->createProjectFile($config['config'].'main_config.ini', 'main_config.ini');
 		$this->createProjectFile($config['config'].$config['general_config'], 'config.ini');
@@ -126,7 +147,6 @@ class Init_Environment_Controller extends Base_Controller {
 		$this->createProjectFile($config['config'].$config['services'], 'services.php');
 		$this->createProjectFile($config['config'].'bootstrap.php', 'bootstrap.php');
 
-		// some default files
 		$this->createProjectFile($config['controller'].'Base_Controller.php', 'Base_Controller.php');
 		$this->createProjectFile($config['bin'].'unit-test', 'unit-test.php');
 		$this->makeProjectFileExecutable($config['bin'].'unit-test');
@@ -136,23 +156,27 @@ class Init_Environment_Controller extends Base_Controller {
 		$this->createControllerFileOld($config['task'].'Task_Controller.php');
 		$this->createProjectFile('.gitignore', 'vcsignore');
 
-		// A couple helper files
 		$this->createProjectFile($config['utils'].'Date.php', 'Date.php');
 		$this->createProjectFile($config['utils'].'Template_Helper.php', 'Template_Helper.php');
 		$this->createProjectFile($config['model'].'Mapper_Shim.php', 'Mapper_Shim.php');
 
-		$fw->flash->addMessage('Project Built Successfully! You can now use <code>fatfree serve</code> to serve your new project!', 'success');
+		$fw->flash->addMessage('Project Built Successfully! You can now use `fatfree serve` to serve your new project!', 'success');
 		$fw->reroute('/', false);
 	}
 
 	protected function createProjectDir(string $relative_path): bool {
-		if(!empty($relative_path) && !file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
+		if(empty($relative_path)) {
+			return true;
+		}
+		InputValidator::assertPathUnderBase($this->fw->PROJECT_BASE_DIR, $relative_path);
+		if(!file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
 			return mkdir($this->fw->PROJECT_BASE_DIR.$relative_path, 0775, true);
 		}
 		return true;
 	}
 
 	protected function createProjectFile(string $relative_path, string $template_file_path): bool {
+		InputValidator::assertPathUnderBase($this->fw->PROJECT_BASE_DIR, $relative_path);
 		$file_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
 		if(!empty($relative_path) && !file_exists($file_path)) {
 			$contents = $this->fw->read(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$template_file_path);
@@ -169,11 +193,23 @@ class Init_Environment_Controller extends Base_Controller {
 	}
 
 	protected function makeProjectFileExecutable(string $relative_path): bool {
+		InputValidator::assertPathUnderBase($this->fw->PROJECT_BASE_DIR, $relative_path);
 		$file_path = $this->fw->PROJECT_BASE_DIR.$relative_path;
 		return chmod($file_path, 0775);
 	}
 
 	protected function sandbox(string $file_path): string {
+		$base_real = realpath($this->fw->PROJECT_BASE_DIR);
+		$file_real = realpath($file_path);
+		if($base_real === false || $file_real === false) {
+			throw new \InvalidArgumentException('Invalid sandbox file path');
+		}
+		$base_real = rtrim(str_replace('\\', '/', $base_real), '/').'/';
+		$file_real = str_replace('\\', '/', $file_real);
+		if(strpos($file_real, $base_real) !== 0) {
+			throw new \InvalidArgumentException('Sandbox file escapes project base directory');
+		}
+
 		$this->temp=$this->fw->hive();
 		unset($hive);
 		extract($this->temp);
@@ -183,6 +219,7 @@ class Init_Environment_Controller extends Base_Controller {
 	}
 
 	protected function createControllerFileOld(string $relative_path): bool {
+		InputValidator::assertPathUnderBase($this->fw->PROJECT_BASE_DIR, $relative_path);
 		if(!file_exists($this->fw->PROJECT_BASE_DIR.$relative_path)) {
 			$controller_filename = basename($this->fw->PROJECT_BASE_DIR.$relative_path);
 			$controller_name = explode('.', $controller_filename)[0];
@@ -192,6 +229,14 @@ class Init_Environment_Controller extends Base_Controller {
 			$this->fw->write($this->fw->PROJECT_BASE_DIR.$relative_path, str_replace('#?php', '<?php', $contents));
 		}
 		return true;
+	}
+
+	protected function validateDatabaseManagementPath(string $path): string {
+		$path = trim($path);
+		if($path === '' || !preg_match('#^/[a-zA-Z0-9_./\-]*$#', $path)) {
+			throw new \InvalidArgumentException('Invalid database management path');
+		}
+		return $path;
 	}
 
 	public function relativePath(string $from, string $to, string $ps = DIRECTORY_SEPARATOR): string {

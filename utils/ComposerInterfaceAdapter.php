@@ -8,18 +8,18 @@ class ComposerInterfaceAdapter extends \Nettools\ComposerInterface\ComposerInter
 	 * @return string Output of shell command
 	 */
 	public function php_shell($script) {
-		// path to php binary
 		$phpbin = $this->_config->composer_phpbin;
 
-		// path to composer home ; will be set in the shell environment. We recommend defining a home value
-		// in the parent folder of the project, allowing sharing data between projects
 		if ( $this->_config->composer_home ) {
 			$home = $this->_config->composer_home;
 			putenv('HOME=' . $home);
 		}
 
-		// navigate to composer project folder and execute command
-		return shell_exec("cd {$this->_libc} ; $phpbin $script 2>&1");
+		$libc = escapeshellarg($this->_libc);
+		$phpbin_arg = escapeshellarg($phpbin);
+		$script_arg = escapeshellarg($script);
+
+		return shell_exec("cd {$libc} && {$phpbin_arg} {$script_arg} 2>&1");
 	}
 
 	/**
@@ -29,6 +29,7 @@ class ComposerInterfaceAdapter extends \Nettools\ComposerInterface\ComposerInter
 	 * @return string Output of shell command
 	 */
 	public function command($cmdline) {
-		return $this->php_shell($this->_config->composer_bin_location." $cmdline");
+		$cmdline = InputValidator::validateComposerCmd($cmdline);
+		return $this->php_shell($this->_config->composer_bin_location.' '.$cmdline);
 	}
 }

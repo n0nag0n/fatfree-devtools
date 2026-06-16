@@ -10,13 +10,25 @@
 		}
 	],
 	"require": {
+		"php": ">=7.4",
 		"bcosca/fatfree-core": "^3.7",
 		"ikkez/f3-flash": "^1.0",
 		"n0nag0n/fatfree-environment-check": "^0.1.0",
 		"net-tools/composer-interface": "^1.0"
 	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.6"
+	},
 	"autoload": {
 		"classmap" : [ "utils", "controllers", "models" ]
+	},
+	"autoload-dev": {
+		"classmap": [ "tests" ]
+	},
+	"config": {
+		"platform": {
+			"php": "7.4.33"
+		}
 	},
 	"bin": "bin/fatfree"
 }
